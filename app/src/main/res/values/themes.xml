@@ -3,6 +3,19 @@
     <style name="Base.Theme.DevSpot" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Màu chủ đạo của app -->
+        <item name="colorPrimary">@color/neon_blue</item>
+        <item name="colorSecondary">@color/neon_green</item>
+
+        <!-- Màu nền -->
+        <item name="android:windowBackground">@color/bg_dark</item>
+
+        <!-- Màu chữ mặc định -->
+        <item name="android:textColor">@color/text_main</item>
+
+        <!-- Đổi màu thanh trạng thái (cục pin, wifi) phía trên cùng -->
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="Theme.DevSpot" parent="Base.Theme.DevSpot" />
