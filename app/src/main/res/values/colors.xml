@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Background Colors -->
     <color name="bg_dark">#0F0F15</color>
     <color name="bg_panel">#1A1A24</color>
 
@@ -12,6 +11,7 @@
     <!-- Text Colors -->
     <color name="text_main">#FFFFFF</color>
     <color name="text_sub">#A0A0B0</color>
+
 
     <!-- Other -->
     <color name="glass_border">#26FFFFFF</color> <!-- 15% White -->

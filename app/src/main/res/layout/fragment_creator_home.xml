@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15">
+
+    <!-- 1. BẢN ĐỒ NỀN (Khung chứa OpenStreetMap / Google Maps) -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 2. THANH CÔNG CỤ PHÍA TRÊN (Top Bar) -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CC0F0F15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DEVSPOT RADAR"
+            android:textColor="#00FF66"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Badge Mode -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#1A1A24"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="▶ Creator Mode"
+            android:textColor="#00F3FF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnHomeSettings"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Cài đặt"
+            android:padding="6dp"
+            android:src="@android:drawable/ic_menu_preferences"
+            android:tint="#FFFFFF" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLocationStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="#CC1A1A24"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="Đang kiểm tra quyền vị trí..."
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar" />
+
+    <!-- 3. KHUNG ĐIỀU KHIỂN BÊN DƯỚI (Bottom Dashboard Panel) -->
+    <LinearLayout
+        android:id="@+id/bottomControlPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E61A1A24"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation">
+
+        <!-- Thông tin Dự án đang Ghim gần đây -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#2A2A35"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_today"
+                android:tint="#00F3FF" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DỰ ÁN ĐANG GHIM"
+                    android:textColor="#A0A0B0"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvActiveProjectTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DevSpot Location-Based Hub"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12 lượt xem"
+                android:textColor="#00FF66"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- NÚT HÀNH ĐỘNG CHÍNH: THẢ GHIM ĐỒ ÁN MỚI -->
+        <Button
+            android:id="@+id/btnDropNewPin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="#00F3FF"
+            android:text="📍 THẢ GHIM ĐỒ ÁN MỚI TRÊN RADAR"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 4. THANH ĐIỀU HƯỚNG ĐÁY (Bottom Navigation) -->
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#0F0F15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/navCreatorRadar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_compass"
+                android:tint="#00F3FF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Radar"
+                android:textColor="#00F3FF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navCreatorExplore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:tint="#A0A0B0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khám phá"
+                android:textColor="#A0A0B0"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navCreatorProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:tint="#A0A0B0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hồ sơ"
+                android:textColor="#A0A0B0"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

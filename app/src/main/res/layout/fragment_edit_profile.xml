@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 1. TOP BAR (Nút quay lại & Tiêu đề) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="CHỈNH SỬA HỒ SƠ"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 2. CARD HEADER: AVATAR & COVER PHOTO -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#1A1A24"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <!-- Avatar đè icon camera -->
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="#2A2A35"
+                android:padding="10dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:tint="#00F3FF" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProfileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lê Anh Quốc ✔"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSysId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="● SYS_ID: UTE-2026-DEV"
+                    android:textColor="#00FF66"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnChangeAvatar"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:backgroundTint="#2A2A35"
+                android:text="Đổi ảnh"
+                android:textColor="#00F3FF"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 3. KHUNG ĐỊNH DANH HỆ THỐNG (System Identity) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="🆔 ĐỊNH DANH HỆ THỐNG"
+            android:textColor="#00FF66"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#1A1A24"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Họ và tên -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HỌ VÀ TÊN *"
+                android:textColor="#A0A0B0"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/etFullName"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="14dp"
+                android:background="#2A2A35"
+                android:hint="Nguyễn Văn A"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#555555"
+                android:textSize="13sp" />
+
+            <!-- Trường học / Cơ sở đào tạo -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TRƯỜNG ĐẠI HỌC / CƠ SỞ ĐÀO TẠO *"
+                android:textColor="#A0A0B0"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/etUniversity"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="14dp"
+                android:background="#2A2A35"
+                android:hint="ĐH Sư phạm Kỹ thuật Đà Nẵng (UD-UTE)"
+                android:inputType="text"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#555555"
+                android:textSize="13sp" />
+
+            <!-- Chuyên ngành & Niên khóa -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHUYÊN NGÀNH &amp; NIÊN KHÓA"
+                android:textColor="#A0A0B0"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/etMajor"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="#2A2A35"
+                android:hint="Công nghệ Thông tin • Khóa 2024-2028"
+                android:inputType="text"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#555555"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- 4. KHUNG TIỂU SỬ // MANIFESTO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="📝 TIỂU SỬ // MANIFESTO (Tối đa 200 ký tự)"
+            android:textColor="#A0A0B0"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etBio"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginTop="8dp"
+            android:background="#1A1A24"
+            android:gravity="top"
+            android:hint="Xây dựng hệ sinh thái ứng dụng vị trí cho sinh viên. Đang phát triển hệ thống Radar DevSpot..."
+            android:inputType="textMultiLine"
+            android:maxLength="200"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555"
+            android:textSize="13sp" />
+
+        <!-- 5. MẠNG LƯỚI KẾT NỐI (Telemetry Links) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="🔗 MẠNG LƯỚI KẾT NỐI (TELEMETRY LINKS)"
+            android:textColor="#00F3FF"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#1A1A24"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- GitHub Node -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GITHUB REPO / NODE"
+                android:textColor="#A0A0B0"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/etGithubUrl"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="12dp"
+                android:background="#2A2A35"
+                android:drawableStart="@android:drawable/ic_menu_search"
+                android:drawablePadding="8dp"
+                android:hint="https://github.com/username"
+                android:inputType="textUri"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#555555"
+                android:textSize="12sp" />
+
+            <!-- Portfolio / CV Link -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HỒ SƠ CV / PORTFOLIO LINK"
+                android:textColor="#A0A0B0"
+                android:textSize="11sp" />
+
+            <EditText
+                android:id="@+id/etPortfolioUrl"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:background="#2A2A35"
+                android:drawableStart="@android:drawable/ic_menu_send"
+                android:drawablePadding="8dp"
+                android:hint="https://myportfolio.space/cv.pdf"
+                android:inputType="textUri"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#555555"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Spacer đẩy nút bấm xuống -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- 6. NÚT LƯU CẤU HÌNH HỒ SƠ -->
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#00FF66"
+            android:text="💾 LƯU CẤU HÌNH HỒ SƠ"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

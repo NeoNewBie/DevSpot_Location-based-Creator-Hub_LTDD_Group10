@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15">
+
+    <!-- 1. THANH TIÊU ĐỀ (Top Bar) -->
+    <LinearLayout
+        android:id="@+id/topBarPrivacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1A1A24"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="QUYỀN RIÊNG TƯ VỊ TRÍ"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="● GEO-SHIELD ACTIVE // ENCRYPTED GPS"
+            android:textColor="#00FF66"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 2. NỘI DUNG CUỘN (ScrollView) -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/includedBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBarPrivacy">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- THẺ HIỂN THỊ TRẠNG THÁI KHU VỰC HIỆN TẠI -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1A24"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_menu_mylocation"
+                    android:tint="#00FF66" />
+
+                <TextView
+                    android:id="@+id/tvCurrentRegion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="ĐH SƯ PHẠM KỸ THUẬT ĐÀ NẴNG"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Kiểm soát cách các Creator và Nhà tuyển dụng nhìn thấy bạn trên Radar."
+                    android:textColor="#A0A0B0"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- TIÊU ĐỀ: CHẾ ĐỘ HIỂN THỊ VỊ TRÍ -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="📍 CHẾ ĐỘ HIỂN THỊ VỊ TRÍ"
+                android:textColor="#00F3FF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- LỰA CHỌN 1: VỊ TRÍ CHÍNH XÁC -->
+            <LinearLayout
+                android:id="@+id/optionPrecise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Vị trí chính xác (PRECISE)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbPrecise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#00F3FF" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Hiển thị tọa độ thực từng mét. Thích hợp khi đang ngồi tại thư viện, lab, hoặc quán cà phê học nhóm."
+                    android:textColor="#A0A0B0"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- LỰA CHỌN 2: CHỈ HIỂN THỊ KHU VỰC (ĐANG CHỌN) -->
+            <LinearLayout
+                android:id="@+id/optionCampus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#00F3FF"
+                android:padding="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#1A1A24"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Chỉ hiển thị khu vực (CAMPUS MODE)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbCampus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="#00F3FF"
+                            android:checked="true" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Ẩn tọa độ chính xác. Chỉ hiển thị bạn đang trong bán kính 500m - 1km quanh khuôn viên trường ĐH."
+                        android:textColor="#A0A0B0"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- LỰA CHỌN 3: ẨN HOÀN TOÀN / TẨNG HÌNH -->
+            <LinearLayout
+                android:id="@+id/optionStealth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ẩn hoàn toàn / Tàng hình (STEALTH)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbStealth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#00F3FF" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tắt tín hiệu GPS khỏi Radar tìm kiếm. Bạn vẫn xem được bản đồ nhưng người khác không thể thấy bạn."
+                    android:textColor="#A0A0B0"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- NÂNG CAO // GEOFENCE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="⚙️ TÙY CHỈNH NÂNG CAO // GEOFENCE"
+                android:textColor="#00FF66"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <Switch
+                    android:id="@+id/swAutoStealth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Tự động Stealth Mode sau 22:00"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:thumbTint="#00FF66" />
+
+                <Switch
+                    android:id="@+id/swFriendsOnly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:checked="true"
+                    android:text="Chỉ bạn bè trong Cụm Node mới thấy vị trí"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:thumbTint="#00FF66" />
+            </LinearLayout>
+
+            <!-- NÚT ÁP DỤNG CẤU HÌNH -->
+            <Button
+                android:id="@+id/btnUpdatePrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#00F3FF"
+                android:text="🛡️ ÁP DỤNG CẤU HÌNH VỊ TRÍ"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 3. NHÚNG THANH ĐIỀU HƯỚNG DÙNG CHUNG -->
+    <include
+        android:id="@+id/includedBottomNav"
+        layout="@layout/layout_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

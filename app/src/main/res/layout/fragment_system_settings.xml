@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15">
+
+    <!-- 1. THANH TIÊU ĐỀ (Top Bar) -->
+    <LinearLayout
+        android:id="@+id/topBarSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1A1A24"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="CÀI ĐẶT HỆ THỐNG"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#2A2A35"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="v4.2.0-STABLE"
+                android:textColor="#00FF66"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 2. NỘI DUNG CUỘN CÀI ĐẶT (ScrollView) -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/includedBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBarSettings">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- CARD TRẠNG THÁI PROTOCOL -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TRẠNG THÁI PROTOCOL"
+                        android:textColor="#A0A0B0"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="● NODE: ONLINE"
+                        android:textColor="#00FF66"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Mã hóa đa lớp Mesh • Độ trễ mạng: 18ms"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- NHÓM 1: BẢO MẬT & TÀI KHOẢN -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="🛡️ BẢO MẬT &amp; TÀI KHOẢN"
+                android:textColor="#00F3FF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <!-- Đổi mật khẩu -->
+                <LinearLayout
+                    android:id="@+id/btnChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đổi mật khẩu"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#A0A0B0"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2A2A35" />
+
+                <!-- Xác thực 2 bước (2FA) -->
+                <Switch
+                    android:id="@+id/sw2FA"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checked="true"
+                    android:text="Xác thực 2 bước (2FA)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:thumbTint="#00FF66" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2A2A35" />
+
+                <!-- Khóa sinh trắc học -->
+                <Switch
+                    android:id="@+id/swBiometrics"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checked="true"
+                    android:text="Khóa sinh trắc học (FaceID / Vân tay)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:thumbTint="#00FF66" />
+            </LinearLayout>
+
+            <!-- NHÓM 2: GIAO DIỆN & TRẢI NGHIỆM -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="🎨 GIAO DIỆN &amp; TRẢI NGHIỆM"
+                android:textColor="#00FF66"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <Switch
+                    android:id="@+id/swRadarEffect"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checked="true"
+                    android:text="Hiệu ứng Radar Scan &amp; Pulse"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:thumbTint="#00FF66" />
+            </LinearLayout>
+
+            <!-- NHÓM 3: NGÔN NGỮ & VÙNG -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="🌐 NGÔN NGỮ &amp; VÙNG"
+                android:textColor="#A0A0B0"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ngôn ngữ vận hành"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tiếng Việt (Mặc định) ✔"
+                        android:textColor="#00FF66"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2A2A35" />
+
+                <!-- Đơn vị khoảng cách -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đơn vị đo khoảng cách Radar"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#2A2A35"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Kilometers (km)"
+                        android:textColor="#00F3FF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- NHÓM 4: QUYỀN RIÊNG TƯ & TIN HIỆU -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="🔒 QUYỀN RIÊNG TƯ &amp; TÍN HIỆU"
+                android:textColor="#00F3FF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#1A1A24"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <!-- Quản lý quyền riêng tư vị trí -->
+                <LinearLayout
+                    android:id="@+id/btnNavPrivacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Quyền riêng tư vị trí"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chế độ Khu vực ›"
+                        android:textColor="#00F3FF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#2A2A35" />
+
+                <!-- Thông báo Tín hiệu xung quanh -->
+                <Switch
+                    android:id="@+id/swNearbyNotifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checked="true"
+                    android:text="Thông báo Tín hiệu xung quanh"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:thumbTint="#00FF66" />
+            </LinearLayout>
+
+            <!-- NHÓM 5: VÙNG NGUY HIỂM // SESSIONS -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="⚠️ VÙNG NGUY HIỂM // SESSIONS"
+                android:textColor="#FF4444"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- Nút Đăng xuất tài khoản -->
+            <Button
+                android:id="@+id/btnNavLogout"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#2A1A1A"
+                android:text="⏻ Đăng xuất tài khoản (Disconnect Session)"
+                android:textColor="#FF4444"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <!-- Nút Xóa danh tính Node -->
+            <Button
+                android:id="@+id/btnDeleteAccount"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="#1A1A24"
+                android:text="🗑️ Xóa danh tính Node (Delete Account)"
+                android:textColor="#A0A0B0"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 3. NHÚNG THANH ĐIỀU HƯỚNG DÙNG CHUNG -->
+    <include
+        android:id="@+id/includedBottomNav"
+        layout="@layout/layout_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

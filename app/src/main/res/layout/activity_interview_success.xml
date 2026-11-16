@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 1. TOP BAR (Nút Quay lại) -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="#FFFFFF" />
+
+        <!-- 2. THÔNG BÁO XÁC NHẬN THÀNH CÔNG (Success Header) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#1A1A24"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/checkbox_on_background"
+                android:tint="#00FF66" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="TÍN HIỆU ĐÃ PHÁT SÓNG!"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="● KÊNH MÃ HÓA QUANTUM LOCK // ĐÃ KẾT NỐI"
+                android:textColor="#00FF66"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 3. HỒ SƠ BẢN GHI PHỎNG VẤN (Summary Card) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#1A1A24"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📋 HỒ SƠ BẢN GHI PHỎNG VẤN"
+                    android:textColor="#00F3FF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#2A2A35"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:text="96% MATCH"
+                    android:textColor="#00FF66"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Thông tin ứng viên -->
+            <TextView
+                android:id="@+id/tvCandidateInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Nguyễn Tuấn Kiệt • UTE Đà Nẵng"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Vị trí tuyển dụng -->
+            <TextView
+                android:id="@+id/tvRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Vị trí: AI Research Engineer Intern"
+                android:textColor="#A0A0B0"
+                android:textSize="13sp" />
+
+            <!-- Lịch hẹn -->
+            <TextView
+                android:id="@+id/tvInterviewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="🕒 Thứ 5 • 14:00 - 15:00"
+                android:textColor="#00FF66"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <!-- Địa điểm -->
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="📍 Địa điểm: Khu Công Nghệ Cao (SHTP)"
+                android:textColor="#A0A0B0"
+                android:textSize="13sp" />
+
+            <!-- Đãi ngộ -->
+            <TextView
+                android:id="@+id/tvSalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="💰 Mức lương đề xuất: 15M - 20M VNĐ"
+                android:textColor="#00F3FF"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- 4. TIẾN TRÌNH KẾT NỐI NODE (Status Timeline) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#1A1A24"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📡 TIẾN TRÌNH KẾT NỐI NODE"
+                android:textColor="#A0A0B0"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="1. Bản tin tín hiệu phỏng vấn: HOÀN TẤT"
+                android:textColor="#00FF66"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="2. Ứng viên phản hồi lịch: ĐANG CHỜ (24H)"
+                android:textColor="#A0A0B0"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Spacer đẩy các nút xuống đáy màn hình -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- 5. NÚT CHUYỂN VÀO PHÒNG CHAT 1-1 -->
+        <Button
+            android:id="@+id/btnGoToChat"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#00FF66"
+            android:text="💬 VÀO PHÒNG CHAT 1-1 VỚI ỨNG VIÊN →"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

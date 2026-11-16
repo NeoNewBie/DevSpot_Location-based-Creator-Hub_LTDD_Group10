@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@android:drawable/ic_menu_revert"
+        android:tint="#FFFFFF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Gửi Đánh Giá Kiến Trúc Code"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Để lại góp ý chuyên môn cho đồ án DevSpot Geo Radar."
+        android:textColor="#A0A0B0"
+        android:textSize="13sp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:numStars="5"
+        android:progressTint="#00F3FF"
+        android:rating="4.5" />
+
+    <EditText
+        android:id="@+id/etReviewComment"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:background="#1A1A24"
+        android:gravity="top"
+        android:hint="Nhận xét về Clean Architecture, tối ưu SQL Spatial, hiệu năng Android..."
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#555555"
+        android:textSize="13sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btnSubmitReview"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:backgroundTint="#00F3FF"
+        android:text="GỬI ĐÁNH GIÁ REPO"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</LinearLayout>
