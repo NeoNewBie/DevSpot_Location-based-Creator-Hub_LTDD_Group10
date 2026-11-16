@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="#2A2A35"
+    android:padding="12dp"
+    android:text="Xin chào! Mình muốn trao đổi thêm về dự án của bạn."
+    android:textColor="#FFFFFF"
+    android:textSize="14sp" />

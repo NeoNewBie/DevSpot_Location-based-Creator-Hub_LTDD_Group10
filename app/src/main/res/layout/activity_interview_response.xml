@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Quay lại"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="@color/text_main" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="LỜI MỜI PHỎNG VẤN"
+            android:textColor="@color/neon_blue"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/bg_panel"
+            android:padding="16dp"
+            android:text="Nexus AI Labs mời bạn trao đổi về vị trí AI Research Engineer Intern.\n\nThời gian: Thứ 5 • 14:00 - 15:00\nĐịa điểm: Khu Công Nghệ Cao Đà Nẵng\nĐề xuất: 15M - 20M VNĐ"
+            android:textColor="@color/text_main"
+            android:lineSpacingExtra="6dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Đề xuất lịch khác (không bắt buộc)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAlternativeTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_main" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvInterviewResponseStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/neon_green"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnAcceptInterview"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/neon_green"
+            android:text="CHẤP NHẬN LỊCH"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btnProposeInterview"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/bg_panel"
+            android:text="ĐỀ XUẤT LỊCH KHÁC"
+            android:textColor="@color/text_main" />
+
+        <Button
+            android:id="@+id/btnDeclineInterview"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#442222"
+            android:text="TỪ CHỐI LỜI MỜI"
+            android:textColor="@color/text_main" />
+    </LinearLayout>
+</ScrollView>

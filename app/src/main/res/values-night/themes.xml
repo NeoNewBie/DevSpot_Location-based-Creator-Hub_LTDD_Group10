@@ -1,7 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme for Dark/Night mode. -->
     <style name="Base.Theme.DevSpot" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Màu chủ đạo của app -->
+        <item name="colorPrimary">@color/neon_blue</item>
+        <item name="colorSecondary">@color/neon_green</item>
+
+        <!-- Màu nền -->
+        <item name="android:windowBackground">@color/bg_dark</item>
+
+        <!-- Màu chữ mặc định -->
+        <item name="android:textColor">@color/text_main</item>
+
+        <!-- Đổi màu thanh trạng thái và thanh điều hướng -->
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 </resources>

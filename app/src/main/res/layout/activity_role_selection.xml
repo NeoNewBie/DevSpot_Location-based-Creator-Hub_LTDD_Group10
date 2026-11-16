@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Nút Back (Quay lại) -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:src="@android:drawable/ic_menu_revert"
+        android:tint="#FFFFFF" />
+
+    <!-- Tiêu đề chính -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bạn là ai?"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Chọn vai trò để cá nhân hóa trải nghiệm radar tài năng và kết nối mạng lưới công nghệ."
+        android:textColor="#A0A0B0"
+        android:textSize="14sp" />
+
+    <!-- CARD 1: TÔI LÀ CREATOR (Trạng thái đang được chọn) -->
+    <!-- Sử dụng viền giả bằng cách bọc 1 lớp nền màu Cyan (padding 1dp) -->
+    <LinearLayout
+        android:id="@+id/cardCreator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="#00F3FF"
+        android:padding="1dp"> <!-- Độ dày của viền -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A1A24"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Icon Terminal/Code -->
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#2A2A35"
+                    android:padding="8dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:tint="#00F3FF" />
+
+                <!-- Text Tiêu đề -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tôi là Creator ●"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sinh viên / Developer / Freelancer"
+                        android:textColor="#00F3FF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Checkbox (Tích xanh) -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@android:drawable/checkbox_on_background"
+                    android:tint="#00F3FF" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Khám phá đồng đội, ghim dự án &amp; portfolio lên bản đồ radar công nghệ quanh các trường ĐH, kết nối hackathon."
+                android:textColor="#A0A0B0"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="> TypeScript   > Rust   > AI/ML   +35 Thẻ Hub"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- CARD 2: TÔI LÀ RECRUITER (Trạng thái chưa được chọn) -->
+    <LinearLayout
+        android:id="@+id/cardRecruiter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#12121A"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#1A1A24"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:tint="#A0A0B0" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tôi là Recruiter"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Doanh nghiệp / HR / Tech Lead"
+                    android:textColor="#A0A0B0"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Checkbox rỗng (Chưa tích) -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:src="@android:drawable/checkbox_off_background"
+                android:tint="#555555" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Săn tìm talent CNTT theo vị trí thực tế, xem demo repo GitHub, verify kỹ năng &amp; tuyển dụng tức thì."
+            android:textColor="#7A7A8A"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Radar lọc bán kính   Verified Code   Đồ án xuất sắc"
+            android:textColor="#7A7A8A"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Khoảng trống đẩy nội dung xuống đáy -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Thông báo trạng thái tọa độ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@android:drawable/ic_menu_mylocation"
+            android:tint="#00FF66" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● TỌA ĐỘ PHÁT HIỆN"
+                android:textColor="#00FF66"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="182 Nodes Online quanh Khu Công Nghệ Cao / Q. Thủ Đức"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Nút Tiếp Tục -->
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:backgroundTint="#00F3FF"
+        android:text="Tiếp tục với Creator →"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/btnOpenLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Đã có tài khoản? Đăng nhập"
+        android:textColor="#00FF66"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
