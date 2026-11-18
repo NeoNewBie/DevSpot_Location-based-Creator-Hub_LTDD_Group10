@@ -1,6 +1,9 @@
 package com.example.devspot.view
 
 import android.Manifest
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -118,10 +121,30 @@ class MainActivity : AppCompatActivity() {
         bindScreenActions(layout)
         populateLists(layout)
         updateNavigationSelection(layout)
+
+        // Smooth entry animation for premium feel
+        val content = findViewById<ViewGroup>(android.R.id.content)
+        content.getChildAt(0)?.let { root ->
+            root.alpha = 0f
+            root.translationY = 35f
+            root.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(320)
+                .setInterpolator(android.view.animation.DecelerateInterpolator())
+                .start()
+        }
+
         if (layout == R.layout.fragment_creator_home || layout == R.layout.fragment_recruiter_home) {
             setupMap()
             requestLocationPermissionIfNeeded()
         }
+    }
+
+    private fun shakeView(view: View) {
+        val animator = ObjectAnimator.ofFloat(view, "translationX", 0f, 25f, -25f, 20f, -20f, 10f, -10f, 0f)
+        animator.duration = 400
+        animator.start()
     }
 
     private fun applyWindowInsets() {
@@ -609,8 +632,15 @@ class MainActivity : AppCompatActivity() {
     private fun updateRoleSelection() {
         findViewById<TextView>(R.id.btnContinue).text =
             if (recruiterMode) "Tiếp tục với Recruiter →" else "Tiếp tục với Creator →"
-        findViewById<View>(R.id.cardCreator).alpha = if (recruiterMode) 0.6f else 1f
-        findViewById<View>(R.id.cardRecruiter).alpha = if (recruiterMode) 1f else 0.6f
+        val creatorCard = findViewById<View>(R.id.cardCreator)
+        val recruiterCard = findViewById<View>(R.id.cardRecruiter)
+        if (recruiterMode) {
+            creatorCard?.animate()?.scaleX(0.98f)?.scaleY(0.98f)?.alpha(0.6f)?.setDuration(250)?.start()
+            recruiterCard?.animate()?.scaleX(1.02f)?.scaleY(1.02f)?.alpha(1.0f)?.setDuration(250)?.start()
+        } else {
+            creatorCard?.animate()?.scaleX(1.02f)?.scaleY(1.02f)?.alpha(1.0f)?.setDuration(250)?.start()
+            recruiterCard?.animate()?.scaleX(0.98f)?.scaleY(0.98f)?.alpha(0.6f)?.setDuration(250)?.start()
+        }
     }
 
     private fun showUiState(title: String, message: String, action: String) {
@@ -705,10 +735,10 @@ class MainActivity : AppCompatActivity() {
     private fun setTabSelected(tabId: Int, selected: Boolean) {
         val color = tabColor(selected)
         val tab = findViewById<ViewGroup>(tabId) ?: return
-        tab.alpha = if (selected) 1f else 0.62f
+        tab.animate().alpha(if (selected) 1f else 0.62f).setDuration(200).start()
         for (index in 0 until tab.childCount) {
             when (val child = tab.getChildAt(index)) {
-                is ImageView -> child.setColorFilter(color)
+                is ImageView -> animateIconTint(child, tabColor(!selected), color, 220)
                 is TextView -> child.setTextColor(color)
             }
         }
@@ -726,7 +756,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bind(id: Int, action: () -> Unit) {
-        findViewById<View>(id)?.setOnClickListener { action() }
+        findViewById<View>(id)?.let { view ->
+            view.setOnClickListener {
+                view.animate().scaleX(0.94f).scaleY(0.94f).setDuration(90).withEndAction {
+                    view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(90).start()
+                }.start()
+                action()
+            }
+        }
+    }
+
+    private fun animateIconTint(imageView: ImageView, fromColor: Int, toColor: Int, duration: Long = 200) {
+        val animator = ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor)
+        animator.duration = duration
+        animator.addUpdateListener { anim ->
+            imageView.setColorFilter(anim.animatedValue as Int)
+        }
+        animator.start()
+    }
+
+    private fun animateIconPress(view: View) {
+        view.animate().scaleX(0.92f).scaleY(0.92f).setDuration(90).withEndAction {
+            view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(90).start()
+        }.start()
     }
 
     private data class UiRow(val title: String, val subtitle: String)
