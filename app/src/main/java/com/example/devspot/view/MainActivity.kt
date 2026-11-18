@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.devspot.BuildConfig
 import com.example.devspot.R
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -67,7 +68,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setBackgroundDrawableResource(R.color.bg_dark)
-        Configuration.getInstance().userAgentValue = packageName
+        Configuration.getInstance().userAgentValue =
+            "${getString(R.string.app_name)}/${BuildConfig.VERSION_NAME} " +
+                "(+https://github.com/NeoNewBie/DevSpot_Location-based-Creator-Hub_LTDD_Group10; $packageName)"
         showScreen(R.layout.activity_splash, addToHistory = false)
         mainHandler.postDelayed({
             if (!isFinishing && currentLayout == R.layout.activity_splash) {
@@ -552,7 +555,7 @@ class MainActivity : AppCompatActivity() {
         val isNewMap = mapView !== view
         mapView = view
         if (activityResumed && isNewMap) view.onResume()
-        view.setTileSource(TileSourceFactory.MAPNIK)
+        view.setTileSource(TileSourceFactory.OpenTopo)
         view.setMultiTouchControls(true)
         val location = lastKnownLocation()
         val locationStatus = findViewById<TextView>(R.id.tvLocationStatus)

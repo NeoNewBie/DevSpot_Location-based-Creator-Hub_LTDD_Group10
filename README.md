@@ -4,3 +4,4 @@ Mạng xã hội Bản đồ Portfolio (Location-based Creator Hub). Sinh viên 
 ## Tài liệu
 
 - [Tổng quan ứng dụng và rà soát giao diện](docs/APP_OVERVIEW.md)
+- [Schema SQL Server và dữ liệu mẫu Creator/Project/Map](database/DevSpot_CreatorHub.sql)

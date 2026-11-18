@@ -54,7 +54,8 @@ Theo báo cáo, phạm vi cốt lõi gồm tạo portfolio, ghim dự án lên b
 
 - **Xử lý lỗi tải bản đồ:** hiện đã có trạng thái quyền/GPS và vị trí dự phòng; chưa có nhận biết lỗi tải tile/mất mạng để tự hiển thị và thử lại trạng thái lỗi.
 - **Trạng thái danh sách theo dữ liệu thật:** mẫu hộp thư/tín hiệu/đã lưu đang dùng dữ liệu minh họa; cần nối trạng thái rỗng/lỗi của từng danh sách khi tích hợp API.
-- **Backend và lưu trữ:** đăng nhập/đăng ký, reset mật khẩu, tạo ghim, lọc, đánh giá, bookmark/follow/like/comment, lời mời và tin nhắn chưa được gửi/lưu từ máy chủ. Các thao tác ghi dữ liệu hiện chỉ xác thực hoặc phản hồi ở mức giao diện demo.
+- **Backend và lưu trữ:** ứng dụng Android chưa kết nối database hoặc API; đăng nhập/đăng ký, reset mật khẩu, tạo ghim, lọc, đánh giá, bookmark/follow/like/comment, lời mời và tin nhắn chưa được gửi/lưu từ máy chủ. Các thao tác ghi dữ liệu hiện chỉ xác thực hoặc phản hồi ở mức giao diện demo.
+- **SQL Server tham khảo:** [`database/DevSpot_CreatorHub.sql`](../database/DevSpot_CreatorHub.sql) tạo schema Creator/Project/Map và dữ liệu mẫu để thử nghiệm riêng. Các tài khoản mẫu dùng chung mật khẩu `DevSpotDemo@2026!`, được lưu dưới dạng PBKDF2-SHA256. Chạy script không tự kết nối database với ứng dụng Android; đăng nhập trong app vẫn chỉ là giao diện xem trước.
 
 ## 5. Công nghệ và cấu trúc dự án
 
@@ -69,4 +70,4 @@ Theo báo cáo, phạm vi cốt lõi gồm tạo portfolio, ghim dự án lên b
 
 ## 6. Phạm vi và xác minh
 
-Các màn hình/điều hướng đã được nối trong `MainActivity` như một bản xem trước UI; chưa có xác thực hay lưu dữ liệu thật. Đã kiểm tra bằng `:app:assembleDebug`, `:app:testDebugUnitTest` và xác nhận Gradle resolve OSMDroid `6.1.20`. Trên AVD Android 37.1, app không crash và UI hierarchy có nội dung nhưng screenshot đen; ứng dụng Cài đặt vẫn hiển thị bình thường. Cùng APK trên AVD `DevSpot_37_2_Beta` (Android 37.2-beta3, Google APIs PS16K, software renderer) hiển thị đúng màn chọn Creator/Recruiter, nên lỗi màn đen thuộc image Android 37.1 của AVD chứ không phải luồng khởi chạy trong app. `MapView` và marker cũng hiển thị trên beta AVD; tile OpenStreetMap không tải được vì môi trường hiện tại không kết nối được tới `tile.openstreetmap.org`. Dùng AVD beta để kiểm thử giao diện; cần kết nối mạng có thể truy cập dịch vụ tile để thấy bản đồ nền.
+Các màn hình/điều hướng đã được nối trong `MainActivity` như một bản xem trước UI; chưa có xác thực hay lưu dữ liệu thật. Đã kiểm tra bằng `:app:assembleDebug`, `:app:testDebugUnitTest` và xác nhận Gradle resolve OSMDroid `6.1.20`. Trên AVD Android 37.1, app không crash và UI hierarchy có nội dung nhưng screenshot đen; ứng dụng Cài đặt vẫn hiển thị bình thường. Cùng APK trên AVD `DevSpot_37_2_Beta` hiển thị đúng màn hình; máy chủ tile `tile.openstreetmap.org` trả về lỗi truy cập trong môi trường này. Bản đồ Radar hiện dùng OpenTopoMap với ghi công OpenStreetMap, SRTM và OpenTopoMap hiển thị trên bản đồ.
