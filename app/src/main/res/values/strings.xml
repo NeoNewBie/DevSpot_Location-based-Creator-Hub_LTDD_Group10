@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DevSpot</string>
+    <string name="map_attribution">Map data © OpenStreetMap contributors • SRTM\nMap style © OpenTopoMap • CC BY-SA</string>
 </resources>
