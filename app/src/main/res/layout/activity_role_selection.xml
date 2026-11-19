@@ -33,22 +33,22 @@
         android:textColor="#A0A0B0"
         android:textSize="14sp" />
 
-    <!-- CARD 1: TÔI LÀ CREATOR (Trạng thái đang được chọn) -->
-    <!-- Sử dụng viền giả bằng cách bọc 1 lớp nền màu Cyan (padding 1dp) -->
+    <!-- CARD 1: CREATOR -->
     <LinearLayout
         android:id="@+id/cardCreator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="#00F3FF"
-        android:padding="1dp"> <!-- Độ dày của viền -->
+        android:background="#1A1A24"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1A1A24"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,12 +57,13 @@
 
                 <!-- Icon Terminal/Code -->
                 <ImageView
+                    android:id="@+id/ivRoleCreator"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="#2A2A35"
                     android:padding="8dp"
                     android:src="@android:drawable/ic_menu_edit"
-                    android:tint="#00F3FF" />
+                    android:tint="#A0A0B0" />
 
                 <!-- Text Tiêu đề -->
                 <LinearLayout
@@ -73,31 +74,36 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvRoleCreatorTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tôi là Creator ●"
+                        android:text="Tôi là Creator"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvRoleCreatorSubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sinh viên / Developer / Freelancer"
-                        android:textColor="#00F3FF"
+                        android:textColor="#A0A0B0"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <!-- Checkbox (Tích xanh) -->
                 <ImageView
+                    android:id="@+id/ivRoleCreatorCheck"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:src="@android:drawable/checkbox_on_background"
-                    android:tint="#00F3FF" />
+                    android:tint="#00FF66"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvRoleCreatorDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -106,6 +112,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/tvRoleCreatorFeatures"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -116,13 +123,15 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- CARD 2: TÔI LÀ RECRUITER (Trạng thái chưa được chọn) -->
+    <!-- CARD 2: RECRUITER -->
     <LinearLayout
         android:id="@+id/cardRecruiter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#12121A"
+        android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -132,6 +141,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/ivRoleRecruiter"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="#1A1A24"
@@ -147,6 +157,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvRoleRecruiterTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tôi là Recruiter"
@@ -155,6 +166,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvRoleRecruiterSubtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Doanh nghiệp / HR / Tech Lead"
@@ -164,6 +176,7 @@
 
             <!-- Checkbox rỗng (Chưa tích) -->
             <ImageView
+                android:id="@+id/ivRoleRecruiterCheck"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
@@ -172,6 +185,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvRoleRecruiterDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -180,6 +194,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tvRoleRecruiterFeatures"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -187,6 +202,16 @@
             android:textColor="#7A7A8A"
             android:textSize="11sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvRoleSelectionFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Chọn một vai trò để bật nút tiếp tục."
+        android:textColor="#A0A0B0"
+        android:textSize="13sp"
+        android:visibility="visible" />
 
     <!-- Khoảng trống đẩy nội dung xuống đáy -->
     <View
@@ -236,8 +261,9 @@
         android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:backgroundTint="#00F3FF"
-        android:text="Tiếp tục với Creator →"
+        android:backgroundTint="#555555"
+        android:enabled="false"
+        android:text="Chọn một vai trò để tiếp tục"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold" />

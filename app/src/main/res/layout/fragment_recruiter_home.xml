@@ -36,27 +36,49 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="DEVSPOT RADAR"
+                android:text="DEVSPOT"
                 android:textColor="#00F3FF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#1A1A24"
-                android:paddingHorizontal="12dp"
+                android:paddingHorizontal="8dp"
                 android:paddingVertical="6dp"
-                android:text="▶ Recruiter Mode"
+                android:text="Recruiter"
                 android:textColor="#00FF66"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnHomeMessages"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="6dp"
+                android:background="#1A1A24"
+                android:contentDescription="Tin nhắn"
+                android:padding="7dp"
+                android:src="@android:drawable/ic_dialog_email"
+                android:tint="#00FF66" />
+
+            <ImageView
+                android:id="@+id/btnHomeNotifications"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="6dp"
+                android:background="#1A1A24"
+                android:contentDescription="Thông báo"
+                android:padding="7dp"
+                android:src="@android:drawable/ic_popup_reminder"
+                android:tint="#00F3FF" />
 
             <ImageView
                 android:id="@+id/btnHomeSettings"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:contentDescription="Cài đặt"
                 android:padding="6dp"
                 android:src="@android:drawable/ic_menu_preferences"
@@ -96,6 +118,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar" />
+
+    <TextView
+        android:id="@+id/tvMapDemoBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="#CC1A1A24"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        android:text="DỮ LIỆU MẪU • chạm ghim để xem"
+        android:textColor="#00FF66"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLocationStatus" />
 
     <TextView
         android:id="@+id/tvMapAttribution"

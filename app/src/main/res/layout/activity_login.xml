@@ -132,6 +132,15 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tvLoginFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/neon_green"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
     <!-- Phần Đăng ký ở dưới cùng màn hình -->
     <!-- Dùng View trống để đẩy phần chữ xuống đáy (Cách làm tối giản thay vì ConstraintLayout) -->
     <View

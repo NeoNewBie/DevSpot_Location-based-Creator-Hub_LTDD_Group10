@@ -16,6 +16,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val apiBaseUrl = providers.gradleProperty("devspotApiBaseUrl")
+            .orElse("http://127.0.0.1:5080/")
+            .get()
+            .let { url -> if (url.endsWith("/")) url else "$url/" }
+        buildConfigField(
+            "String",
+            "API_BASE_URL",
+            "\"${apiBaseUrl.replace("\\", "\\\\").replace("\"", "\\\"")}\""
+        )
     }
 
     buildTypes {

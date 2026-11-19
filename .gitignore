@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/backend/DevSpot.Api/bin/
+/backend/DevSpot.Api/obj/
