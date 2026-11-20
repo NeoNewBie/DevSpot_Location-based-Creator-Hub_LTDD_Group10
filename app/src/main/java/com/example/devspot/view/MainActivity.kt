@@ -8,11 +8,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
+import android.location.Location
 import android.location.LocationManager
+import android.os.CancellationSignal
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Patterns
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +23,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
@@ -36,6 +40,7 @@ import com.example.devspot.BuildConfig
 import com.example.devspot.R
 import com.example.devspot.data.DevSpotApiClient
 import com.example.devspot.data.LoginRequest
+import com.example.devspot.data.RegisterRequest
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -43,6 +48,7 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import java.util.ArrayDeque
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private val mainHandler = Handler(Looper.getMainLooper())
@@ -54,6 +60,10 @@ class MainActivity : AppCompatActivity() {
     private var currentUserEmail: String? = null
     private var chatPartnerName = "Nexus AI Labs"
     private var chatPreviewMessage = "Bạn có thể tham gia phỏng vấn vào thứ 5 không?"
+    private var locationVerificationPending = false
+    private var lastVerifiedLocation: Location? = null
+    private var locationRequestCancellation: CancellationSignal? = null
+    private var selectedPrivacyRadioId: Int? = null
     private val demoCreators = listOf(
         DemoCreator(
             "nguyen-tuan-kiet",
@@ -126,8 +136,16 @@ class MainActivity : AppCompatActivity() {
                 result[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             if (granted) {
                 setupMap()
+                if (locationVerificationPending) {
+                    locationVerificationPending = false
+                    verifyCurrentLocation()
+                }
             } else {
                 locationPermissionRequested = true
+                if (locationVerificationPending) {
+                    locationVerificationPending = false
+                    updateLocationVerificationStatus(null, "Chưa được cấp quyền truy cập vị trí.")
+                }
                 setupMap()
                 Toast.makeText(
                     this,
@@ -179,6 +197,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         mainHandler.removeCallbacksAndMessages(null)
+        locationRequestCancellation?.cancel()
         super.onDestroy()
     }
 
@@ -224,11 +243,23 @@ class MainActivity : AppCompatActivity() {
     private fun applyWindowInsets() {
         val content = findViewById<ViewGroup>(android.R.id.content)
         val root = content.getChildAt(0) ?: return
+        val initialLeft = root.paddingLeft
+        val initialTop = root.paddingTop
+        val initialRight = root.paddingRight
+        val initialBottom = root.paddingBottom
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            view.setPadding(
+                initialLeft + bars.left,
+                initialTop + bars.top,
+                initialRight + bars.right,
+                initialBottom + bars.bottom
+            )
             insets
         }
+        ViewCompat.requestApplyInsets(root)
     }
 
     private fun bindCommonActions() {
@@ -240,19 +271,11 @@ class MainActivity : AppCompatActivity() {
         bind(R.id.navSignal) { openTab(R.layout.fragment_signal_stream) }
         bind(R.id.navSaved) { openTab(R.layout.fragment_saved_bookmarks) }
         bind(R.id.navMessages) { openTab(R.layout.fragment_inbox) }
-        bind(R.id.btnHomeMessages) { openTab(R.layout.fragment_inbox) }
-        bind(R.id.btnHomeNotifications) { openTab(R.layout.fragment_signal_stream) }
-        bind(R.id.btnNavRadar) { openTab(homeLayout()) }
-        bind(R.id.btnNavSaved) { openTab(R.layout.fragment_saved_bookmarks) }
-        bind(R.id.btnNavCompany) {
+        bind(R.id.navProfile) {
             openTab(if (recruiterMode) R.layout.activity_company_profile else R.layout.fragment_creator_profile)
         }
-        bind(R.id.navCreatorRadar) { openTab(R.layout.fragment_creator_home) }
-        bind(R.id.navCreatorExplore) { openTab(R.layout.fragment_cluster_nodes) }
-        bind(R.id.navCreatorProfile) { openTab(R.layout.fragment_creator_profile) }
-        bind(R.id.navRecruiterRadar) { openTab(R.layout.fragment_recruiter_home) }
-        bind(R.id.navRecruiterSaved) { openTab(R.layout.fragment_saved_bookmarks) }
-        bind(R.id.navRecruiterCompany) { openTab(R.layout.activity_company_profile) }
+        bind(R.id.btnHomeMessages) { openTab(R.layout.fragment_inbox) }
+        bind(R.id.btnHomeNotifications) { openTab(R.layout.fragment_signal_stream) }
         bind(R.id.btnHomeSettings) { showScreen(R.layout.fragment_system_settings) }
     }
 
@@ -331,6 +354,16 @@ class MainActivity : AppCompatActivity() {
                                 recruiterMode = account.role.equals("Recruiter", ignoreCase = true)
                                 currentUserEmail = account.email.trim().lowercase()
                                 isAuthenticated = true
+
+                                val existingProfile = loadUserProfile(currentUserEmail!!)
+                                if (!getSharedPreferences("devspot_user_profiles", MODE_PRIVATE).contains("fullName_${currentUserEmail!!}")) {
+                                    val initProfile = existingProfile.copy(
+                                        fullName = account.fullName.ifEmpty { existingProfile.fullName },
+                                        role = account.role
+                                    )
+                                    saveUserProfile(initProfile)
+                                }
+
                                 Toast.makeText(
                                     this@MainActivity,
                                     "Xin chào ${account.fullName}",
@@ -346,8 +379,8 @@ class MainActivity : AppCompatActivity() {
                                 loginFeedback.text = message
                                 loginFeedback.visibility = View.VISIBLE
                             }
-                        } catch (_: java.io.IOException) {
-                            loginFeedback.text = "Không kết nối được API. Hãy khởi chạy backend trên máy tính."
+                        } catch (e: Exception) {
+                            loginFeedback.text = "Không kết nối được API (${e.localizedMessage ?: "Lỗi mạng"}). Hãy kiểm tra Backend."
                             loginFeedback.visibility = View.VISIBLE
                         } finally {
                             loginButton.isEnabled = true
@@ -374,18 +407,29 @@ class MainActivity : AppCompatActivity() {
                     val name = findViewById<EditText>(R.id.etName)
                     val email = findViewById<EditText>(R.id.etEmail)
                     val password = findViewById<EditText>(R.id.etPassword)
+                    val github = findViewById<EditText>(R.id.etGithub)
                     when {
                         name.text.isNullOrBlank() -> name.error = "Vui lòng nhập họ tên"
-                        email.text.isNullOrBlank() -> email.error = "Vui lòng nhập email"
-                        password.text.isNullOrBlank() -> password.error = "Vui lòng nhập mật khẩu"
+                        name.text.length > 120 -> name.error = "Họ tên không được vượt quá 120 ký tự"
+                        !Patterns.EMAIL_ADDRESS.matcher(email.text.toString().trim()).matches() ->
+                            email.error = "Vui lòng nhập email hợp lệ"
+                        password.text.length < 8 -> password.error = "Mật khẩu cần có ít nhất 8 ký tự"
+                        password.text.length > 128 -> password.error = "Mật khẩu không được vượt quá 128 ký tự"
+                        github.text.length > 500 -> github.error = "Liên kết không được vượt quá 500 ký tự"
                         !findViewById<CheckBox>(R.id.cbTerms).isChecked ->
                             Toast.makeText(this, "Vui lòng đồng ý điều khoản để tiếp tục.", Toast.LENGTH_SHORT).show()
                         else -> {
-                            Toast.makeText(
-                                this,
-                                "Đăng ký chưa kết nối API nên tài khoản chưa được tạo. Hãy đăng nhập bằng tài khoản demo.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            registerAccount(
+                                RegisterRequest(
+                                    email = email.text.toString().trim(),
+                                    password = password.text.toString(),
+                                    fullName = name.text.toString().trim(),
+                                    role = "Creator",
+                                    githubUrl = github.text.toString().trim().ifEmpty { null }
+                                ),
+                                findViewById(R.id.btnRegister),
+                                findViewById(R.id.tvRegisterFeedback)
+                            )
                         }
                     }
                 }
@@ -401,17 +445,27 @@ class MainActivity : AppCompatActivity() {
                     val password = findViewById<EditText>(R.id.etPassword)
                     when {
                         name.text.isNullOrBlank() -> name.error = "Vui lòng nhập họ tên"
+                        name.text.length > 120 -> name.error = "Họ tên không được vượt quá 120 ký tự"
                         company.text.isNullOrBlank() -> company.error = "Vui lòng nhập tên công ty"
-                        email.text.isNullOrBlank() -> email.error = "Vui lòng nhập email"
-                        password.text.isNullOrBlank() -> password.error = "Vui lòng nhập mật khẩu"
+                        company.text.length > 150 -> company.error = "Tên công ty không được vượt quá 150 ký tự"
+                        !Patterns.EMAIL_ADDRESS.matcher(email.text.toString().trim()).matches() ->
+                            email.error = "Vui lòng nhập email hợp lệ"
+                        password.text.length < 8 -> password.error = "Mật khẩu cần có ít nhất 8 ký tự"
+                        password.text.length > 128 -> password.error = "Mật khẩu không được vượt quá 128 ký tự"
                         !findViewById<CheckBox>(R.id.cbTerms).isChecked ->
                             Toast.makeText(this, "Vui lòng đồng ý điều khoản để tiếp tục.", Toast.LENGTH_SHORT).show()
                         else -> {
-                            Toast.makeText(
-                                this,
-                                "Đăng ký chưa kết nối API nên tài khoản chưa được tạo. Hãy đăng nhập bằng tài khoản demo.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            registerAccount(
+                                RegisterRequest(
+                                    email = email.text.toString().trim(),
+                                    password = password.text.toString(),
+                                    fullName = name.text.toString().trim(),
+                                    role = "Recruiter",
+                                    companyName = company.text.toString().trim()
+                                ),
+                                findViewById(R.id.btnRegisterRecruiter),
+                                findViewById(R.id.tvRegisterFeedback)
+                            )
                         }
                     }
                 }
@@ -420,13 +474,13 @@ class MainActivity : AppCompatActivity() {
             R.layout.fragment_creator_home -> {
                 bind(R.id.btnDropNewPin) { showScreen(R.layout.fragment_drop_project_pin) }
                 bind(R.id.tvActiveProjectTitle) { showScreen(R.layout.activity_project_detail) }
-                bind(R.id.tvLocationStatus) { openLocationSettingsOrRequestPermission() }
+                bind(R.id.tvLocationStatus) { verifyCurrentLocation() }
             }
 
             R.layout.fragment_recruiter_home -> {
                 bind(R.id.btnFilterRadar) { showScreen(R.layout.bottom_sheet_filter_radar) }
                 bind(R.id.btnOpenCandidate) { showScreen(R.layout.activity_creator_public_profile) }
-                bind(R.id.tvLocationStatus) { openLocationSettingsOrRequestPermission() }
+                bind(R.id.tvLocationStatus) { verifyCurrentLocation() }
                 findViewById<EditText>(R.id.etSearchTalent)?.setOnEditorActionListener { _, _, _ ->
                     Toast.makeText(this, "Bộ lọc từ khóa được áp dụng trong bản xem trước.", Toast.LENGTH_SHORT).show()
                     true
@@ -439,14 +493,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.layout.fragment_creator_profile -> {
+                updateProfileUI(R.layout.fragment_creator_profile)
                 bind(R.id.btnSettings) { showScreen(R.layout.fragment_system_settings) }
                 bind(R.id.btnEditProfile) { showScreen(R.layout.fragment_edit_profile) }
                 bind(R.id.btnAddNewProject) { showScreen(R.layout.fragment_drop_project_pin) }
             }
 
-            R.layout.fragment_edit_profile -> bind(R.id.btnSaveProfile) {
-                Toast.makeText(this, "Bản xem trước chưa lưu hồ sơ vào máy chủ.", Toast.LENGTH_LONG).show()
-                goBack()
+            R.layout.fragment_edit_profile -> {
+                updateProfileUI(R.layout.fragment_edit_profile)
             }
 
             R.layout.fragment_drop_project_pin -> bind(R.id.btnSubmitPin) {
@@ -462,9 +516,33 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            R.layout.fragment_geo_privacy -> bind(R.id.btnUpdatePrivacy) {
-                Toast.makeText(this, "Tùy chọn quyền riêng tư được lưu trong phiên xem trước.", Toast.LENGTH_SHORT).show()
-                goBack()
+            R.layout.fragment_geo_privacy -> {
+                bindLocationPrivacySettings()
+                bind(R.id.btnVerifyCurrentLocation) { verifyCurrentLocation() }
+                bind(R.id.btnClearPrivacyChoice) {
+                    selectedPrivacyRadioId = null
+                    updatePrivacyRadioSelection()
+                }
+                bind(R.id.btnUpdatePrivacy) {
+                    val privacy = when (selectedPrivacyRadioId) {
+                        R.id.rbPrecise -> "Exact"
+                        R.id.rbStealth -> "Hidden"
+                        R.id.rbCampus -> "Area"
+                        else -> "Hidden"
+                    }
+                    getSharedPreferences("devspot_location_privacy", MODE_PRIVATE)
+                        .edit()
+                        .putString("privacy:${currentUserEmail ?: "guest"}", privacy)
+                        .apply()
+                    findViewById<TextView>(R.id.tvLocationPrivacyFeedback)?.apply {
+                        text = if (selectedPrivacyRadioId == null) {
+                            "Không có lựa chọn được đánh dấu; vị trí được đặt thành ẩn."
+                        } else {
+                            "Đã lưu chế độ ${privacyLabel(privacy)} trên thiết bị này."
+                        }
+                        visibility = View.VISIBLE
+                    }
+                }
             }
 
             R.layout.fragment_system_settings -> {
@@ -603,10 +681,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.layout.activity_company_profile -> {
+                updateProfileUI(R.layout.activity_company_profile)
                 bind(R.id.btnCompanyMessages) { showScreen(R.layout.fragment_inbox) }
-                bind(R.id.btnEditCompany) {
-                    Toast.makeText(this, "Chỉnh sửa hồ sơ công ty chưa kết nối.", Toast.LENGTH_SHORT).show()
-                }
             }
 
             R.layout.activity_creator_public_profile -> {
@@ -748,13 +824,25 @@ class MainActivity : AppCompatActivity() {
                 )
             ) { openHome() }
 
-            R.layout.fragment_creator_profile -> setRows(
-                R.id.rvPinnedProjects,
-                listOf(
-                    UiRow("DevSpot Geo Radar", "Kotlin • ASP.NET Core • OSMDroid"),
-                    UiRow("Cybersafe IoT", "C++ • Edge AI • MQTT")
-                )
-            ) { showScreen(R.layout.activity_project_detail) }
+            R.layout.fragment_creator_profile -> {
+                val profile = loadUserProfile(currentUserEmail ?: "guest")
+                val isNewUser = profile.email != "quoc@gmail.com" && profile.email != "quocdev" && !profile.email.contains("demo")
+                val projectRows = if (isNewUser) {
+                    listOf(UiRow("Chưa có dự án được ghim", "Chạm vào đây để thả ghim dự án đầu tiên của bạn lên Radar"))
+                } else {
+                    listOf(
+                        UiRow("DevSpot Geo Radar", "Kotlin • ASP.NET Core • OSMDroid"),
+                        UiRow("Cybersafe IoT", "C++ • Edge AI • MQTT")
+                    )
+                }
+                setRows(R.id.rvPinnedProjects, projectRows) { row ->
+                    if (row.title != "Chưa có dự án được ghim") {
+                        showScreen(R.layout.activity_project_detail)
+                    } else {
+                        showScreen(R.layout.fragment_drop_project_pin)
+                    }
+                }
+            }
 
             R.layout.activity_creator_public_profile -> {
                 updatePublicCreatorProfile()
@@ -798,17 +886,18 @@ class MainActivity : AppCompatActivity() {
         if (activityResumed && isNewMap) view.onResume()
         view.setTileSource(TileSourceFactory.OpenTopo)
         view.setMultiTouchControls(true)
-        val location = lastKnownLocation()
-        val locationStatus = findViewById<TextView>(R.id.tvLocationStatus)
         val hasPermission =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED
+        val location = if (hasPermission) lastVerifiedLocation ?: lastKnownLocation() else null
+        val locationStatus = findViewById<TextView>(R.id.tvLocationStatus)
         locationStatus?.text = when {
             !hasPermission -> "Vị trí chưa được cấp • Chạm để thử lại"
-            location == null -> "GPS đang tắt/chưa có vị trí gần đây • Chạm để cài đặt"
-            else -> "Đã xác định vị trí gần đây"
+            lastVerifiedLocation != null -> "Đã xác minh vị trí hiện tại • chạm để cập nhật"
+            location == null -> "Chưa lấy được vị trí hiện tại • chạm để xác minh"
+            else -> "Có vị trí gần đây • chạm để xác minh vị trí mới"
         }
         val center = location?.let { GeoPoint(it.latitude, it.longitude) } ?: GeoPoint(16.0759, 108.1534)
         view.controller.setZoom(14.0)
@@ -816,8 +905,12 @@ class MainActivity : AppCompatActivity() {
         view.overlays.removeAll { it is Marker }
         view.overlays.add(Marker(view).apply {
             position = center
-            title = if (location == null) "Khu vực Đà Nẵng" else "Vị trí gần đây"
-            snippet = "Vị trí tham chiếu"
+            title = when {
+                lastVerifiedLocation != null -> "Vị trí đã xác minh"
+                location == null -> "Khu vực Đà Nẵng"
+                else -> "Vị trí gần đây"
+            }
+            snippet = if (lastVerifiedLocation != null) "Vị trí hiện tại của thiết bị" else "Vị trí tham chiếu"
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         })
         val demoPins = demoMapPins()
@@ -970,19 +1063,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openLocationSettingsOrRequestPermission() {
-        val fine = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED
-        val coarse = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED
-        if (!fine && !coarse) {
-            locationPermissionRequested = false
-            requestLocationPermissionIfNeeded()
-        } else {
-            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-        }
-    }
-
     private fun updateInterviewResponse(message: String) {
         findViewById<TextView>(R.id.tvInterviewResponseStatus)?.apply {
             text = message
@@ -1081,6 +1161,198 @@ class MainActivity : AppCompatActivity() {
     private fun openRegistrationRoleSelection() {
         registrationRecruiterMode = null
         showScreen(R.layout.activity_role_selection)
+    }
+
+    private fun registerAccount(request: RegisterRequest, button: Button, feedback: TextView) {
+        feedback.visibility = View.GONE
+        button.isEnabled = false
+        lifecycleScope.launch {
+            try {
+                val response = DevSpotApiClient.service.register(request)
+                if (response.isSuccessful) {
+                    val account = response.body()
+                    if (account == null) {
+                        feedback.text = "Máy chủ trả về dữ liệu tài khoản không hợp lệ."
+                        feedback.visibility = View.VISIBLE
+                        return@launch
+                    }
+                    val role = account.role
+                    val email = account.email.trim().lowercase()
+                    recruiterMode = role.equals("Recruiter", ignoreCase = true)
+                    currentUserEmail = email
+                    isAuthenticated = true
+
+                    val newProfile = UserProfile(
+                        email = email,
+                        fullName = account.fullName.ifEmpty { request.fullName.ifEmpty { "Người dùng mới" } },
+                        role = role,
+                        universityOrCompany = if (recruiterMode) (request.companyName ?: "Doanh nghiệp mới") else "Chưa cập nhật trường học",
+                        majorOrIndustry = if (recruiterMode) "Doanh nghiệp công nghệ" else "Sinh viên / Developer",
+                        bio = "Hồ sơ mới tạo. Mời bạn nhập và cập nhật thông tin cá nhân!",
+                        githubUrl = request.githubUrl ?: "",
+                        portfolioUrl = "",
+                        sysId = "DEV-${(1000..9999).random()}"
+                    )
+                    saveUserProfile(newProfile)
+
+                    Toast.makeText(this@MainActivity, "Tạo tài khoản thành công! Mời bạn nhập thông tin hồ sơ mới.", Toast.LENGTH_LONG).show()
+                    showScreen(R.layout.fragment_edit_profile)
+                } else {
+                    feedback.text = when (response.code()) {
+                        400 -> "Thông tin đăng ký chưa hợp lệ. Hãy kiểm tra lại các trường."
+                        404 -> "Không tìm thấy API (HTTP 404). Vui lòng kiểm tra Backend (dotnet run) đã khởi chạy chưa."
+                        409 -> "Email đã được sử dụng hoặc thông tin công ty bị trùng."
+                        503 -> "API không kết nối được SQL Server. Hãy kiểm tra kết nối CSDL."
+                        else -> "Đăng ký thất bại (HTTP ${response.code()})."
+                    }
+                    feedback.visibility = View.VISIBLE
+                }
+            } catch (e: Exception) {
+                feedback.text = "Không kết nối được API (${e.localizedMessage ?: "Lỗi mạng"}). Hãy kiểm tra địa chỉ API và Backend."
+                feedback.visibility = View.VISIBLE
+            } finally {
+                button.isEnabled = true
+            }
+        }
+    }
+
+    private fun bindLocationPrivacySettings() {
+        val preferences = getSharedPreferences("devspot_location_privacy", MODE_PRIVATE)
+        val savedMode = preferences.getString("privacy:${currentUserEmail ?: "guest"}", "Area")
+        selectedPrivacyRadioId = when (savedMode) {
+            "Exact" -> R.id.rbPrecise
+            "Hidden" -> R.id.rbStealth
+            else -> R.id.rbCampus
+        }
+        updatePrivacyRadioSelection()
+
+        listOf(
+            R.id.rbPrecise to R.id.optionPrecise,
+            R.id.rbCampus to R.id.optionCampus,
+            R.id.rbStealth to R.id.optionStealth
+        ).forEach { (radioId, optionId) ->
+            findViewById<RadioButton>(radioId)?.setOnClickListener {
+                togglePrivacyRadioSelection(radioId)
+            }
+            findViewById<View>(optionId)?.setOnClickListener {
+                togglePrivacyRadioSelection(radioId)
+            }
+        }
+        updateLocationVerificationStatus(
+            lastVerifiedLocation,
+            if (lastVerifiedLocation == null) "Chưa xác minh vị trí hiện tại." else null
+        )
+    }
+
+    private fun togglePrivacyRadioSelection(radioId: Int) {
+        selectedPrivacyRadioId = if (selectedPrivacyRadioId == radioId) null else radioId
+        updatePrivacyRadioSelection()
+    }
+
+    private fun updatePrivacyRadioSelection() {
+        findViewById<RadioButton>(R.id.rbPrecise)?.isChecked = selectedPrivacyRadioId == R.id.rbPrecise
+        findViewById<RadioButton>(R.id.rbCampus)?.isChecked = selectedPrivacyRadioId == R.id.rbCampus
+        findViewById<RadioButton>(R.id.rbStealth)?.isChecked = selectedPrivacyRadioId == R.id.rbStealth
+        findViewById<TextView>(R.id.tvLocationPrivacyFeedback)?.apply {
+            text = if (selectedPrivacyRadioId == null) {
+                "Không có lựa chọn được đánh dấu; khi áp dụng, vị trí sẽ được ẩn."
+            } else {
+                val mode = when (selectedPrivacyRadioId) {
+                    R.id.rbPrecise -> "Exact"
+                    R.id.rbStealth -> "Hidden"
+                    else -> "Area"
+                }
+                "Đang chọn chế độ ${privacyLabel(mode)}."
+            }
+            visibility = View.VISIBLE
+        }
+    }
+
+    private fun privacyLabel(mode: String): String = when (mode) {
+        "Exact" -> "chính xác"
+        "Hidden" -> "ẩn vị trí"
+        else -> "khu vực"
+    }
+
+    private fun updateLocationVerificationStatus(location: Location?, message: String? = null) {
+        val currentRegion = findViewById<TextView>(R.id.tvCurrentRegion)
+        val verificationStatus = findViewById<TextView>(R.id.tvLocationVerificationStatus)
+        val homeStatus = findViewById<TextView>(R.id.tvLocationStatus)
+        if (location != null) {
+            currentRegion?.text = String.format(
+                Locale.US,
+                "%.5f, %.5f",
+                location.latitude,
+                location.longitude
+            )
+            verificationStatus?.text = String.format(
+                Locale.US,
+                "Đã xác minh vị trí mới (độ chính xác khoảng %.0f m). Tọa độ chỉ hiển thị trên thiết bị.",
+                location.accuracy
+            )
+            homeStatus?.text = String.format(
+                Locale.US,
+                "Đã xác minh vị trí hiện tại • ±%.0f m • chạm để cập nhật",
+                location.accuracy
+            )
+        } else {
+            currentRegion?.text = "Chưa xác minh vị trí hiện tại"
+            verificationStatus?.text = message ?: "Chạm nút bên dưới để lấy vị trí mới từ thiết bị."
+            homeStatus?.text = message ?: "Chạm để xác minh vị trí hiện tại"
+        }
+    }
+
+    private fun verifyCurrentLocation() {
+        val hasFine = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+        val hasCoarse = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+        if (!hasFine && !hasCoarse) {
+            locationVerificationPending = true
+            locationPermissionRequested = false
+            requestLocationPermissionIfNeeded()
+            return
+        }
+
+        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val provider = when {
+            hasFine && manager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
+            manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
+            else -> null
+        }
+        if (provider == null) {
+            updateLocationVerificationStatus(null, "Bật GPS hoặc dịch vụ vị trí rồi thử xác minh lại.")
+            AlertDialog.Builder(this)
+                .setTitle("Vị trí đang tắt")
+                .setMessage("Hãy bật dịch vụ vị trí để xác minh nơi bạn đang ở.")
+                .setPositiveButton("Mở cài đặt") { _, _ ->
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+                .setNegativeButton("Để sau", null)
+                .show()
+            return
+        }
+
+        updateLocationVerificationStatus(null, "Đang lấy vị trí mới từ thiết bị…")
+        locationRequestCancellation?.cancel()
+        val cancellation = CancellationSignal()
+        locationRequestCancellation = cancellation
+        try {
+            manager.getCurrentLocation(provider, cancellation, mainExecutor) { location ->
+                if (location == null) {
+                    updateLocationVerificationStatus(
+                        null,
+                        "Không nhận được vị trí mới. Hãy kiểm tra GPS/quyền vị trí và thử lại."
+                    )
+                } else {
+                    lastVerifiedLocation = location
+                    updateLocationVerificationStatus(location)
+                    setupMap()
+                }
+            }
+        } catch (_: SecurityException) {
+            updateLocationVerificationStatus(null, "Quyền vị trí đã bị thu hồi. Hãy cấp quyền rồi thử lại.")
+        }
     }
 
     private fun showUiState(title: String, message: String, action: String) {
@@ -1216,59 +1488,35 @@ class MainActivity : AppCompatActivity() {
         if (recruiterMode) R.layout.fragment_recruiter_home else R.layout.fragment_creator_home
 
     private fun updateNavigationSelection(layout: Int) {
-        val creatorTab = when (layout) {
-            R.layout.fragment_creator_home -> R.id.navCreatorRadar
-            R.layout.fragment_cluster_nodes -> R.id.navCreatorExplore
-            R.layout.fragment_creator_profile -> R.id.navCreatorProfile
-            else -> null
-        }
-        val recruiterTab = when (layout) {
-            R.layout.fragment_recruiter_home -> R.id.navRecruiterRadar
-            R.layout.fragment_saved_bookmarks -> R.id.navRecruiterSaved
-            R.layout.activity_company_profile -> R.id.navRecruiterCompany
+        findViewById<TextView>(R.id.tvNavMap)?.text = "RADAR"
+        findViewById<TextView>(R.id.tvNavClusters)?.text =
+            if (recruiterMode) "CREATOR" else "KHÁM PHÁ"
+        findViewById<TextView>(R.id.tvNavSignal)?.text = "TIN BÁO"
+        findViewById<TextView>(R.id.tvNavProfile)?.text =
+            if (recruiterMode) "CÔNG TY" else "HỒ SƠ"
+        val selected = when (layout) {
+            R.layout.fragment_creator_home,
+            R.layout.fragment_recruiter_home,
+            R.layout.fragment_drop_project_pin -> R.id.navMap
+            R.layout.fragment_cluster_nodes -> R.id.navClusters
+            R.layout.fragment_signal_stream -> R.id.navSignal
+            R.layout.fragment_saved_bookmarks -> R.id.navSaved
+            R.layout.fragment_inbox, R.layout.activity_chat_detail -> R.id.navMessages
+            R.layout.fragment_creator_profile,
+            R.layout.activity_company_profile,
+            R.layout.fragment_system_settings,
+            R.layout.fragment_geo_privacy -> R.id.navProfile
             else -> null
         }
         listOf(
-            R.id.navCreatorRadar,
-            R.id.navCreatorExplore,
-            R.id.navCreatorProfile,
-            R.id.navRecruiterRadar,
-            R.id.navRecruiterSaved,
-            R.id.navRecruiterCompany
-        ).forEach { id ->
-            setTabSelected(id, id == creatorTab || id == recruiterTab)
-        }
-
-        if (layout == R.layout.fragment_saved_bookmarks) {
-            findViewById<TextView>(R.id.tvBtnNavRadar)?.text = "Radar"
-            findViewById<TextView>(R.id.tvBtnNavSaved)?.text = "Đã lưu"
-            findViewById<TextView>(R.id.tvBtnNavCompany)?.text =
-                if (recruiterMode) "Công ty" else "Hồ sơ"
-            setTabSelected(R.id.btnNavRadar, false)
-            setTabSelected(R.id.btnNavSaved, true)
-            setTabSelected(R.id.btnNavCompany, false)
-            return
-        }
-
-        val selected = when (layout) {
-            R.layout.fragment_creator_home, R.layout.fragment_recruiter_home -> R.id.navMap
-            R.layout.fragment_cluster_nodes -> R.id.navClusters
-            R.layout.fragment_signal_stream -> R.id.navSignal
-            R.layout.fragment_inbox, R.layout.activity_chat_detail -> R.id.navMessages
-            else -> null
-        } ?: return
-
-        val tabs = listOf(
-            R.id.navMap to R.id.ivNavMap,
-            R.id.navClusters to R.id.ivNavClusters,
-            R.id.navSignal to R.id.ivNavSignal,
-            R.id.navSaved to R.id.ivNavSaved,
-            R.id.navMessages to R.id.ivNavMessages
-        )
-        tabs.forEach { (tabId, iconId) ->
-            val active = tabId == selected
-            setTabSelected(tabId, active)
-            findViewById<ImageView>(iconId)?.setColorFilter(tabColor(active))
+            R.id.navMap,
+            R.id.navClusters,
+            R.id.navSignal,
+            R.id.navSaved,
+            R.id.navMessages,
+            R.id.navProfile
+        ).forEach { tabId ->
+            setTabSelected(tabId, tabId == selected)
         }
     }
 
@@ -1321,6 +1569,148 @@ class MainActivity : AppCompatActivity() {
         view.animate().scaleX(0.92f).scaleY(0.92f).setDuration(90).withEndAction {
             view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(90).start()
         }.start()
+    }
+
+    private data class UserProfile(
+        val email: String,
+        val fullName: String,
+        val role: String,
+        val universityOrCompany: String,
+        val majorOrIndustry: String,
+        val bio: String,
+        val githubUrl: String = "",
+        val portfolioUrl: String = "",
+        val sysId: String = ""
+    )
+
+    private fun loadUserProfile(email: String): UserProfile {
+        val key = email.trim().lowercase()
+        val prefs = getSharedPreferences("devspot_user_profiles", MODE_PRIVATE)
+        if (prefs.contains("fullName_$key")) {
+            return UserProfile(
+                email = key,
+                fullName = prefs.getString("fullName_$key", "") ?: "",
+                role = prefs.getString("role_$key", if (recruiterMode) "Recruiter" else "Creator") ?: "",
+                universityOrCompany = prefs.getString("university_$key", "") ?: "",
+                majorOrIndustry = prefs.getString("major_$key", "") ?: "",
+                bio = prefs.getString("bio_$key", "") ?: "",
+                githubUrl = prefs.getString("github_$key", "") ?: "",
+                portfolioUrl = prefs.getString("portfolio_$key", "") ?: "",
+                sysId = prefs.getString("sysId_$key", "SYS-${Math.abs(key.hashCode()).toString().takeLast(4)}") ?: ""
+            )
+        }
+
+        if (key == "quoc@gmail.com" || key == "quocdev") {
+            return UserProfile(
+                email = key,
+                fullName = "Lê Anh Quốc",
+                role = "Creator",
+                universityOrCompany = "ĐH Sư phạm Kỹ thuật Đà Nẵng (UD-UTE)",
+                majorOrIndustry = "Công nghệ Thông tin • Khóa 2024-2028",
+                bio = "Xây dựng hệ sinh thái ứng dụng vị trí cho sinh viên. Đang phát triển hệ thống Radar DevSpot...",
+                githubUrl = "https://github.com/quocdev",
+                portfolioUrl = "https://myportfolio.space/cv.pdf",
+                sysId = "UTE-2026-DEV"
+            )
+        }
+
+        return UserProfile(
+            email = key,
+            fullName = if (key.isNotEmpty() && key.contains("@")) key.substringBefore("@").replaceFirstChar { it.uppercase() } else "Người dùng mới",
+            role = if (recruiterMode) "Recruiter" else "Creator",
+            universityOrCompany = if (recruiterMode) "Doanh nghiệp mới" else "Chưa cập nhật trường học",
+            majorOrIndustry = if (recruiterMode) "Doanh nghiệp công nghệ" else "Sinh viên / Developer",
+            bio = "Hồ sơ mới tạo. Mời bạn bấm 'Chỉnh sửa hồ sơ' để hoàn thiện thông tin cá nhân!",
+            githubUrl = "",
+            portfolioUrl = "",
+            sysId = "DEV-${(1000..9999).random()}"
+        )
+    }
+
+    private fun saveUserProfile(profile: UserProfile) {
+        val key = profile.email.trim().lowercase()
+        if (key.isEmpty()) return
+        getSharedPreferences("devspot_user_profiles", MODE_PRIVATE).edit().apply {
+            putString("fullName_$key", profile.fullName)
+            putString("role_$key", profile.role)
+            putString("university_$key", profile.universityOrCompany)
+            putString("major_$key", profile.majorOrIndustry)
+            putString("bio_$key", profile.bio)
+            putString("github_$key", profile.githubUrl)
+            putString("portfolio_$key", profile.portfolioUrl)
+            putString("sysId_$key", profile.sysId)
+            apply()
+        }
+    }
+
+    private fun updateProfileUI(layout: Int) {
+        val email = currentUserEmail ?: "guest"
+        val profile = loadUserProfile(email)
+
+        when (layout) {
+            R.layout.fragment_creator_profile -> {
+                findViewById<TextView>(R.id.tvProfileName)?.text = "${profile.fullName} ✔"
+                val emailHandle = if (email.contains("@")) email.substringBefore("@") else email
+                findViewById<TextView>(R.id.tvRoleMajor)?.text = "@$emailHandle • ${profile.majorOrIndustry}"
+                findViewById<TextView>(R.id.tvUniversityTag)?.text = "🎓 ${profile.universityOrCompany}"
+                findViewById<TextView>(R.id.tvBio)?.text = "\"${profile.bio}\""
+            }
+
+            R.layout.fragment_edit_profile -> {
+                findViewById<TextView>(R.id.tvProfileName)?.text = profile.fullName
+                findViewById<TextView>(R.id.tvSysId)?.text = "● SYS_ID: ${profile.sysId}"
+
+                val etName = findViewById<EditText>(R.id.etFullName)
+                val etUniv = findViewById<EditText>(R.id.etUniversity)
+                val etMajor = findViewById<EditText>(R.id.etMajor)
+                val etBio = findViewById<EditText>(R.id.etBio)
+                val etGithub = findViewById<EditText>(R.id.etGithubUrl)
+                val etPort = findViewById<EditText>(R.id.etPortfolioUrl)
+
+                etName?.setText(profile.fullName)
+                etUniv?.setText(profile.universityOrCompany)
+                etMajor?.setText(profile.majorOrIndustry)
+                etBio?.setText(profile.bio)
+                etGithub?.setText(profile.githubUrl)
+                etPort?.setText(profile.portfolioUrl)
+
+                bind(R.id.btnSaveProfile) {
+                    val newName = etName?.text?.toString()?.trim() ?: ""
+                    val newUniv = etUniv?.text?.toString()?.trim() ?: ""
+                    val newMajor = etMajor?.text?.toString()?.trim() ?: ""
+                    val newBio = etBio?.text?.toString()?.trim() ?: ""
+                    val newGithub = etGithub?.text?.toString()?.trim() ?: ""
+                    val newPortfolio = etPort?.text?.toString()?.trim() ?: ""
+
+                    if (newName.isEmpty()) {
+                        etName?.error = "Vui lòng nhập họ tên"
+                        return@bind
+                    }
+
+                    val updated = profile.copy(
+                        fullName = newName,
+                        universityOrCompany = newUniv,
+                        majorOrIndustry = newMajor,
+                        bio = newBio,
+                        githubUrl = newGithub,
+                        portfolioUrl = newPortfolio
+                    )
+                    saveUserProfile(updated)
+                    Toast.makeText(this, "Đã lưu thông tin hồ sơ mới thành công!", Toast.LENGTH_SHORT).show()
+                    openHome()
+                }
+            }
+
+            R.layout.activity_company_profile -> {
+                findViewById<TextView>(R.id.tvCompanyName)?.text = profile.universityOrCompany
+                findViewById<TextView>(R.id.tvCompanyIndustry)?.text = profile.majorOrIndustry
+                findViewById<TextView>(R.id.tvCompanyBio)?.text = profile.bio
+
+                bind(R.id.btnEditCompany) {
+                    showScreen(R.layout.fragment_edit_profile)
+                }
+            }
+        }
     }
 
     private data class UiRow(val title: String, val subtitle: String, val key: String? = null)

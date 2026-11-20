@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0F0F15"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
@@ -23,11 +24,8 @@
 
         <!-- Trạng thái Bước -->
         <TextView
-            android:id="@+id/btnChangeRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:text=">_ BƯỚC 02 // KHỞI TẠO TÀI KHOẢN"
             android:textColor="#00FF66"
             android:textSize="12sp"
@@ -35,11 +33,8 @@
 
         <!-- Tiêu đề lớn -->
         <TextView
-            android:id="@+id/btnOpenLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_marginTop="8dp"
             android:text="Tạo tài khoản DevSpot"
             android:textColor="#FFFFFF"
@@ -95,8 +90,11 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/btnChangeRole"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="ĐỔI VAI TRÒ"
                 android:textColor="#00F3FF"
                 android:textSize="12sp"
@@ -198,13 +196,25 @@
         <!-- Checkbox Điều khoản -->
         <CheckBox
             android:id="@+id/cbTerms"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:buttonTint="#00FF66"
+            android:gravity="top|start"
             android:text="Tôi đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của DevSpot."
             android:textColor="#A0A0B0"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvRegisterFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#1A1A24"
+            android:padding="12dp"
+            android:textColor="#FF8A80"
+            android:textSize="13sp"
+            android:visibility="gone" />
 
         <!-- Nút ĐĂNG KÝ -->
         <Button
@@ -229,22 +239,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đã có tài khoản? "
                 android:textColor="#A0A0B0"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:gravity="center" />
 
             <TextView
+                android:id="@+id/btnOpenLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="Đăng nhập ngay"
                 android:textColor="#00F3FF"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center" />
         </LinearLayout>
 
     </LinearLayout>
