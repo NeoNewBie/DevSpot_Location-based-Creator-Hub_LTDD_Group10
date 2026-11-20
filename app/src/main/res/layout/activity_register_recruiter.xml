@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0F0F15"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
@@ -23,11 +24,8 @@
 
         <!-- Trạng thái Bước -->
         <TextView
-            android:id="@+id/btnChangeRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:text="● TALENT RADAR // ACTIVE   STAGE 02 // RECRUITER"
             android:textColor="#00FF66"
             android:textSize="11sp"
@@ -35,11 +33,8 @@
 
         <!-- Tiêu đề lớn -->
         <TextView
-            android:id="@+id/btnOpenLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_marginTop="8dp"
             android:text="Gia nhập DevSpot"
             android:textColor="#FFFFFF"
@@ -95,8 +90,11 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/btnChangeRole"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="ĐỔI VAI TRÒ"
                 android:textColor="#00F3FF"
                 android:textSize="12sp"
@@ -198,11 +196,12 @@
         <!-- Checkbox 1: Tùy chọn Kích hoạt Radar -->
         <CheckBox
             android:id="@+id/cbActivateRadar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:buttonTint="#00F3FF"
             android:checked="true"
+            android:gravity="top|start"
             android:text="Kích hoạt Radar quét trong bán kính 10km quanh các trường ĐH"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
@@ -210,13 +209,25 @@
         <!-- Checkbox 2: Điều khoản -->
         <CheckBox
             android:id="@+id/cbTerms"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:buttonTint="#00FF66"
+            android:gravity="top|start"
             android:text="Chấp thuận Điều khoản Mạng lưới Doanh nghiệp &amp; Bảo mật Dữ liệu SV"
             android:textColor="#A0A0B0"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvRegisterFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#1A1A24"
+            android:padding="12dp"
+            android:textColor="#FF8A80"
+            android:textSize="13sp"
+            android:visibility="gone" />
 
         <!-- Nút ĐĂNG KÝ RECRUITER -->
         <Button
@@ -235,22 +246,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đã có tài khoản đối tác tuyển dụng? "
+                android:text="Đã có tài khoản đối tác tuyển dụng?"
                 android:textColor="#A0A0B0"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:gravity="center" />
 
             <TextView
+                android:id="@+id/btnOpenLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="Đăng nhập ngay"
                 android:textColor="#00FF66"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center" />
         </LinearLayout>
 
     </LinearLayout>

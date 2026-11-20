@@ -28,13 +28,13 @@ Theo báo cáo, phạm vi cốt lõi gồm tạo portfolio, ghim dự án lên b
 
 | Nhóm | Layout | Nội dung thể hiện trong giao diện |
 |---|---|---|
-| Khởi động/đăng nhập | `activity_splash.xml`, `activity_login.xml` | Splash DevSpot hiển thị khoảng 1,5 giây trước khi vào luồng chọn vai trò; form đăng nhập, duy trì phiên, liên kết “Quên mật khẩu?” và đăng ký. |
+| Khởi động/đăng nhập | `activity_splash.xml`, `activity_login.xml` | Splash DevSpot hiển thị ngắn trước khi mở đăng nhập; có liên kết “Quên mật khẩu?” và đăng ký. |
 | Đăng ký/khôi phục | `activity_role_selection.xml`, `activity_register_creator.xml`, `activity_register_recruiter.xml`, `activity_password_reset.xml` | Chọn Creator/Recruiter; form đăng ký hai vai trò và giao diện khôi phục mật khẩu. |
 | Creator | `fragment_creator_home.xml`, `fragment_creator_profile.xml`, `fragment_edit_profile.xml`, `fragment_drop_project_pin.xml` | Home/Radar, hồ sơ và kỹ năng, chỉnh sửa hồ sơ, form ghim dự án với tọa độ GPS và liên kết repo/demo. |
 | Recruiter/khám phá | `fragment_recruiter_home.xml`, `activity_creator_public_profile.xml`, `activity_company_profile.xml`, `bottom_sheet_filter_radar.xml`, `fragment_cluster_nodes.xml` | Radar khu vực, hồ sơ Creator công khai, trang công ty, lọc bán kính/công nghệ và xem cụm node. |
 | Dự án/đánh giá | `activity_project_detail.xml`, `activity_project_review.xml`, `item_pinned_project_card.xml` | Chi tiết dự án, liên kết GitHub/demo, thao tác thích/theo dõi/bình luận/lưu, gửi đánh giá repo và thẻ dự án. |
 | Tín hiệu/kết nối | `fragment_signal_stream.xml`, `fragment_inbox.xml`, `activity_chat_detail.xml`, `activity_interview_response.xml`, `item_signal_card.xml`, `item_inbox_chat.xml`, `item_chat_message_received.xml` | Dòng tín hiệu/lời mời, phản hồi lời mời, danh sách hộp thư, chat và các thẻ tin nhắn/tín hiệu. |
-| Lưu và điều hướng | `fragment_saved_bookmarks.xml`, `layout_bottom_navigation.xml` | Danh sách mục đã lưu; thanh điều hướng với Bản đồ, Cụm node, Tín hiệu, Đã lưu và Tin nhắn. |
+| Lưu và điều hướng | `fragment_saved_bookmarks.xml`, `layout_bottom_navigation.xml` | Danh sách mục đã lưu; thanh điều hướng dùng chung gồm Radar, Khám phá/Creator, Tin báo, Đã lưu, Tin nhắn và Hồ sơ/Công ty. |
 | Phỏng vấn | `activity_interview_dispatch.xml`, `activity_interview_success.xml` | Soạn lời mời, chọn lịch/địa điểm/đề xuất lương; màn hình xác nhận đã gửi và trạng thái chờ phản hồi. |
 | Hồ sơ vị trí/tài khoản | `fragment_geo_privacy.xml`, `fragment_system_settings.xml`, `activity_logout_confirm.xml` | Chế độ vị trí chính xác/khu vực/ẩn, cài đặt bảo mật-ngôn ngữ-thông báo và xác nhận đăng xuất. |
 | Trạng thái dùng chung | `activity_ui_state.xml` | Giao diện trạng thái tải/rỗng/lỗi và hành động thử lại/quay lại; form có kiểm tra trường bắt buộc. |
@@ -44,9 +44,10 @@ Theo báo cáo, phạm vi cốt lõi gồm tạo portfolio, ghim dự án lên b
 
 ### Luồng đã được nối ở mức giao diện
 
-- Splash → chọn vai trò → đăng ký hoặc đăng nhập → Home Creator/Recruiter.
-- Hai Home có bản đồ OSMDroid, ghim vị trí gần đây khi có quyền hoặc dùng tọa độ Đà Nẵng tham khảo; chạm trạng thái vị trí để xin quyền/cài đặt GPS.
-- Điều hướng qua lại giữa các tab; trạng thái tab hiện tại được nhấn màu đồng nhất. Có lối tắt cài đặt từ hai Home và điều hướng tới cụm node, tín hiệu, đã lưu, hộp thư, hồ sơ cá nhân/công khai và công ty.
+- Splash → đăng nhập; đăng ký đi qua bước chọn vai trò rồi mở form Creator/Recruiter. Hai form gọi `POST /api/auth/register`; đăng ký thành công mở Home theo vai trò, lỗi được hiển thị ngay trên form.
+- Hai Home có bản đồ OSMDroid và dữ liệu ghim mẫu. App có thể dùng vị trí tham khảo gần đây hoặc Đà Nẵng; thao tác xác minh yêu cầu vị trí mới từ thiết bị, hiển thị tọa độ/độ chính xác cục bộ.
+- Sáu tab chính dùng cùng một thanh điều hướng cho cả hai vai trò; tab Hồ sơ mở Creator Profile hoặc Company Profile theo vai trò. Tab đang mở được tô màu nhất quán.
+- Màn Quyền riêng tư hỗ trợ Exact/Area/Hidden, nút bỏ chọn và mặc định ẩn nếu áp dụng khi không có lựa chọn. Cấu hình lưu trong SharedPreferences theo email, chưa đồng bộ với SQL Server.
 - Các luồng tạo ghim, lọc Radar, chi tiết dự án, thao tác Like/Follow/Comment/Bookmark, đánh giá repo, lời mời phỏng vấn và phản hồi lời mời.
 - Có giao diện khôi phục mật khẩu, trạng thái dùng chung, chat mẫu, xác nhận đăng xuất và kiểm tra một số trường bắt buộc.
 
@@ -54,7 +55,7 @@ Theo báo cáo, phạm vi cốt lõi gồm tạo portfolio, ghim dự án lên b
 
 - **Xử lý lỗi tải bản đồ:** hiện đã có trạng thái quyền/GPS và vị trí dự phòng; chưa có nhận biết lỗi tải tile/mất mạng để tự hiển thị và thử lại trạng thái lỗi.
 - **Trạng thái danh sách theo dữ liệu thật:** mẫu hộp thư/tín hiệu/đã lưu đang dùng dữ liệu minh họa; cần nối trạng thái rỗng/lỗi của từng danh sách khi tích hợp API.
-- **Backend và lưu trữ:** app Android đăng nhập qua API ASP.NET Core, API xác thực tài khoản với SQL Server và trả hồ sơ/role. Các luồng đăng ký, reset mật khẩu, tạo ghim, lọc, đánh giá, bookmark/follow/like/comment, lời mời và tin nhắn chưa được lưu vào database.
+- **Backend và lưu trữ:** Android đăng nhập và đăng ký qua API ASP.NET Core; API xác thực bằng PBKDF2 và tạo Users cùng CreatorProfiles hoặc Companies/RecruiterProfiles trong SQL transaction. Reset mật khẩu, tạo ghim, lọc, đánh giá, bookmark/follow/like/comment, lời mời và tin nhắn chưa được lưu vào database.
 - **SQL Server:** [`database/DevSpot_CreatorHub.sql`](../database/DevSpot_CreatorHub.sql) tạo schema Creator/Project/Map và dữ liệu mẫu. Tài khoản demo dùng chung mật khẩu `DevSpotDemo@2026!`, lưu dạng PBKDF2-SHA256. API và cách chạy được hướng dẫn trong [`backend/DevSpot.Api`](../backend/DevSpot.Api) và README.
 
 ## 5. Công nghệ và cấu trúc dự án
@@ -70,4 +71,13 @@ Theo báo cáo, phạm vi cốt lõi gồm tạo portfolio, ghim dự án lên b
 
 ## 6. Phạm vi và xác minh
 
-Luồng đăng nhập đã gọi API ASP.NET Core để kiểm tra tài khoản và mật khẩu PBKDF2 trong SQL Server; những màn hình và thao tác khác vẫn là bản xem trước. Đã kiểm tra bằng `:app:assembleDebug`, `:app:testDebugUnitTest` và xác nhận Gradle resolve OSMDroid `6.1.20`. Trên AVD Android 37.1, app không crash và UI hierarchy có nội dung nhưng screenshot đen; ứng dụng Cài đặt vẫn hiển thị bình thường. Cùng APK trên AVD `DevSpot_37_2_Beta` hiển thị đúng màn hình; máy chủ tile `tile.openstreetmap.org` trả về lỗi truy cập trong môi trường này. Bản đồ Radar hiện dùng OpenTopoMap với ghi công OpenStreetMap, SRTM và OpenTopoMap hiển thị trên bản đồ.
+Đăng nhập và đăng ký gọi API ASP.NET Core; API kiểm tra tài khoản và mật khẩu PBKDF2 trong SQL Server. Các thao tác chưa có endpoint khác vẫn là bản xem trước. Android `:app:assembleDebug` và `:app:testDebugUnitTest` cùng `dotnet build` đã được xác minh sau các thay đổi đăng ký, điều hướng và vị trí. Trên AVD Android 37.1, app không crash và UI hierarchy có nội dung nhưng screenshot đen; ứng dụng Cài đặt vẫn hiển thị bình thường. Cùng APK trên AVD `DevSpot_37_2_Beta` hiển thị đúng màn hình; máy chủ tile `tile.openstreetmap.org` trả về lỗi truy cập trong môi trường này. Bản đồ Radar hiện dùng OpenTopoMap với ghi công OpenStreetMap, SRTM và OpenTopoMap hiển thị trên bản đồ.
+
+### Khắc phục lỗi `jlink.exe does not exist`
+
+Lỗi này xảy ra do file `gradle/gradle-daemon-jvm.properties` trước đây cấu hình `toolchainVersion=25`, khiến Gradle tự động phát hiện và chọn thư mục JRE rút gọn của VS Code RedHat Extension (`.vscode\extensions\redhat.java...\jre\...`). Thư mục này chỉ là JRE (không phải JDK đầy đủ), thiếu file `bin\jlink.exe` làm task `androidJdkImage` bị lỗi.
+
+**Đã xử lý thành công bằng cách:**
+1. Cập nhật `gradle/gradle-daemon-jvm.properties` sử dụng `toolchainVersion=21` (phiên bản JDK 21 LTS tiêu chuẩn tương thích với Android Studio).
+2. Cấu hình `org.gradle.java.home=C\:/Program Files/Android/openjdk/jdk-21.0.8` trong `gradle.properties`.
+3. Kiểm tra build dự án (`:app:assembleDebug` và `:app:testDebugUnitTest`) thành công 100%.

@@ -82,21 +82,35 @@
 
                 <TextView
                     android:id="@+id/tvCurrentRegion"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="ĐH SƯ PHẠM KỸ THUẬT ĐÀ NẴNG"
+                    android:gravity="center"
+                    android:text="Chưa xác minh vị trí hiện tại"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvLocationVerificationStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Kiểm soát cách các Creator và Nhà tuyển dụng nhìn thấy bạn trên Radar."
+                    android:gravity="center"
+                    android:text="Chạm nút bên dưới để lấy vị trí mới từ thiết bị."
                     android:textColor="#A0A0B0"
                     android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btnVerifyCurrentLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#00FF66"
+                    android:text="XÁC MINH VỊ TRÍ HIỆN TẠI"
+                    android:textColor="#000000"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- TIÊU ĐỀ: CHẾ ĐỘ HIỂN THỊ VỊ TRÍ -->
@@ -156,8 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#00F3FF"
-                android:padding="1dp">
+                android:background="#1A1A24">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,6 +252,24 @@
                     android:textColor="#A0A0B0"
                     android:textSize="12sp" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnClearPrivacyChoice"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#2A2A35"
+                android:text="BỎ CHỌN / ẨN VỊ TRÍ"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvLocationPrivacyFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#A0A0B0"
+                android:textSize="12sp" />
 
             <!-- NÂNG CAO // GEOFENCE -->
             <TextView

@@ -158,7 +158,7 @@
         android:background="#E61A1A24"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation">
+        app:layout_constraintBottom_toTopOf="@+id/includedBottomNav">
 
         <!-- Thông tin số lượng Ghim xung quanh -->
         <LinearLayout
@@ -230,81 +230,11 @@
             android:textSize="13sp" />
     </LinearLayout>
 
-    <!-- 4. THANH ĐIỀU HƯỚNG ĐÁY (Bottom Navigation) -->
-    <LinearLayout
-        android:id="@+id/bottomNavigation"
+    <include
+        android:id="@+id/includedBottomNav"
+        layout="@layout/layout_bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#0F0F15"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:id="@+id/navRecruiterRadar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_compass"
-                android:tint="#00FF66" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Radar"
-                android:textColor="#00FF66"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navRecruiterSaved"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_save"
-                android:tint="#A0A0B0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đã lưu"
-                android:textColor="#A0A0B0"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/navRecruiterCompany"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_myplaces"
-                android:tint="#A0A0B0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Công ty"
-                android:textColor="#A0A0B0"
-                android:textSize="10sp" />
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 # DevSpot_Location-based-Creator-Hub_LTDD_Group10
-Mạng xã hội Bản đồ Portfolio (Location-based Creator Hub). Sinh viên thả ghim (pin) các dự án cá nhân, game demo hoặc mã nguồn của mình tại vị trí hiện tại. Các công ty công nghệ tại Đà Nẵng có thể lướt bản đồ khu vực quanh các trường đại học để trực tiếp bấm vào xem và "săn" thực tập sinh. 
+
+Mạng xã hội Bản đồ Portfolio (Location-based Creator Hub). Sinh viên thả ghim (pin) các dự án cá nhân, game demo hoặc mã nguồn của mình tại vị trí hiện tại. Các công ty công nghệ tại Đà Nẵng có thể lướt bản đồ khu vực quanh các trường đại học để trực tiếp bấm vào xem và "săn" thực tập sinh.
 
 ## Tài liệu
 
@@ -16,3 +17,7 @@ Mạng xã hội Bản đồ Portfolio (Location-based Creator Hub). Sinh viên 
 5. Đăng nhập bằng một email trong `docs/APP_ACCOUNT.MD` và mật khẩu demo `DevSpotDemo@2026!`.
 
 Android chỉ gọi API; chuỗi kết nối SQL Server được giữ ở backend, không đóng gói vào APK. Endpoint hiện được nối là đăng nhập; các luồng dữ liệu khác vẫn là bản xem trước. HTTP và Windows Integrated Security chỉ dùng cho môi trường phát triển cục bộ; triển khai thật cần HTTPS và cơ chế phiên/token được bảo vệ.
+
+//chạy trên terminal 2 lệnh này
+%LOCALAPPDATA%\Android\Sdk\platform-tools\adb.exe reverse tcp:5080 tcp:5080
+dotnet run --project backend/DevSpot.Api --launch-profile http
