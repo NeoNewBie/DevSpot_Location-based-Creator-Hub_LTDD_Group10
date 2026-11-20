@@ -90,3 +90,14 @@ Schema SQL đã có các bảng cho nhiều luồng sản phẩm, nhưng hiện 
 Build cần API 37 SDK/platform và JDK 21 theo cấu hình hiện tại; backend cần .NET 10 SDK cùng SQL Server. Android mặc định gọi loopback API trên cổng 5080, nên emulator cần cấu hình kết nối phù hợp (xem README). Manifest cho phép HTTP cleartext để phát triển cục bộ; không dùng cấu hình này cho triển khai production. Tile OpenTopoMap cần mạng; app chưa có trạng thái lỗi tile hoặc tự thử tải lại.
 
 Các test hiện có trong `app/src/test/` và `app/src/androidTest/` vẫn là test mẫu (phép cộng và kiểm tra package name); chúng không kiểm chứng luồng đăng nhập/đăng ký, điều hướng hay tính năng sản phẩm. Build/test từng được ghi nhận chạy thành công sau các thay đổi trước đây, nhưng kết quả đó không chứng minh các luồng xem trước đã hoàn chỉnh hoặc được kiểm thử tự động.
+
+## 7. Giới thiệu thành viên và phân công thuyết trình
+
+Phần giới thiệu dưới đây tập trung vào vai trò của từng thành viên trong buổi thuyết trình và nội dung họ phụ trách:
+
+- **Quốc (Nhóm trưởng) — giới thiệu tổng quan và các phần chung:** mở đầu, giới thiệu mục tiêu DevSpot và vấn đề ứng dụng hướng đến; trình bày các chức năng dùng chung như tài khoản, Radar, vị trí và điều hướng; giới thiệu công nghệ, cấu trúc Android/backend, phạm vi tích hợp hiện tại và kết luận. Quốc cũng kết nối các phần trình bày để nội dung liền mạch.
+
+- **Sỹ — phụ trách trải nghiệm Creator:** giới thiệu nhu cầu của Creator và các chức năng dành cho vai trò này, gồm xây dựng/chỉnh sửa hồ sơ năng lực, chia sẻ dự án và liên kết repo/demo, ghim dự án trên Radar, lưu dự án và các tương tác liên quan. Khi trình bày, cần nêu rõ nội dung nào đang là dữ liệu mẫu hoặc chỉ lưu trên thiết bị.
+
+- **Sơn — phụ trách trải nghiệm Recruiter:** giới thiệu cách Recruiter khám phá Creator trên Radar, tìm kiếm/lọc theo từ khóa, công nghệ và bán kính; xem hồ sơ ứng viên, thông tin công ty và luồng soạn lời mời phỏng vấn. Cần phân biệt các màn hình xem trước với thao tác hiện đã kết nối backend.
+
