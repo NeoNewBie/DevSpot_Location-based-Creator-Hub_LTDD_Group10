@@ -16,6 +16,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val apiBaseUrl = providers.gradleProperty("devspotApiBaseUrl")
+            .orElse("http://127.0.0.1:5080/")
+            .get()
+            .let { url -> if (url.endsWith("/")) url else "$url/" }
+        buildConfigField(
+            "String",
+            "API_BASE_URL",
+            "\"${apiBaseUrl.replace("\\", "\\\\").replace("\"", "\\\"")}\""
+        )
     }
 
     buildTypes {
@@ -31,6 +40,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 }
@@ -48,6 +58,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("org.osmdroid:osmdroid-android:6.1.20")
 
     // 2. Coroutines (Xử lý bất đồng bộ đa luồng cho Kotlin)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

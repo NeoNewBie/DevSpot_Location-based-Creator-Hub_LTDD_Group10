@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15"
+    android:clipToPadding="false"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Nút Back (Quay lại) -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="#FFFFFF" />
+
+        <!-- Trạng thái Bước -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● TALENT RADAR // ACTIVE   STAGE 02 // RECRUITER"
+            android:textColor="#00FF66"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <!-- Tiêu đề lớn -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Gia nhập DevSpot"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="Radar quét tài năng công nghệ trẻ, sinh viên xuất sắc và đồ án mã nguồn mở quanh các trường đại học."
+            android:textColor="#A0A0B0"
+            android:textSize="14sp" />
+
+        <!-- THẺ HIỂN THỊ VAI TRÒ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="#1A1A24"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:tint="#00F3FF" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VAI TRÒ HIỆN TẠI"
+                    android:textColor="#A0A0B0"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Doanh nghiệp / Headhunter"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnChangeRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="ĐỔI VAI TRÒ"
+                android:textColor="#00F3FF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Ô nhập: HỌ VÀ TÊN NGƯỜI ĐẠI DIỆN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">_ HỌ VÀ TÊN NGƯỜI ĐẠI DIỆN"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etRepresentativeName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#1A1A24"
+            android:drawableStart="@android:drawable/ic_menu_edit"
+            android:drawablePadding="12dp"
+            android:hint="Trần Minh Trang"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555" />
+
+        <!-- Ô nhập: TÊN CÔNG TY / TỔ CHỨC -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">_ TÊN CÔNG TY / TỔ CHỨC CÔNG NGHỆ"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#1A1A24"
+            android:drawableStart="@android:drawable/ic_menu_myplaces"
+            android:drawablePadding="12dp"
+            android:hint="Nexus AI Labs Vietnam"
+            android:inputType="text"
+            android:paddingHorizontal="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555" />
+
+        <!-- Ô nhập: EMAIL DOANH NGHIỆP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">_ EMAIL DOANH NGHIỆP CỦA BẠN"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etCompanyEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#1A1A24"
+            android:drawableStart="@android:drawable/ic_dialog_email"
+            android:drawablePadding="12dp"
+            android:hint="trang.tran@nexuslabs.ai"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555" />
+
+        <!-- Ô nhập: MẬT KHẨU -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">_ MẬT KHẨU QUẢN TRỊ VIÊN RADAR"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#1A1A24"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:drawablePadding="12dp"
+            android:hint="••••••••"
+            android:inputType="textPassword"
+            android:paddingHorizontal="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555" />
+
+        <!-- Checkbox 1: Tùy chọn Kích hoạt Radar -->
+        <CheckBox
+            android:id="@+id/cbActivateRadar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:buttonTint="#00F3FF"
+            android:checked="true"
+            android:gravity="top|start"
+            android:text="Kích hoạt Radar quét trong bán kính 10km quanh các trường ĐH"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <!-- Checkbox 2: Điều khoản -->
+        <CheckBox
+            android:id="@+id/cbTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:buttonTint="#00FF66"
+            android:gravity="top|start"
+            android:text="Chấp thuận Điều khoản Mạng lưới Doanh nghiệp &amp; Bảo mật Dữ liệu SV"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvRegisterFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#1A1A24"
+            android:padding="12dp"
+            android:textColor="#FF8A80"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <!-- Nút ĐĂNG KÝ RECRUITER -->
+        <Button
+            android:id="@+id/btnRegisterRecruiter"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="#00F3FF"
+            android:text="TẠO TÀI KHOẢN RECRUITER →"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Footer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đã có tài khoản đối tác tuyển dụng?"
+                android:textColor="#A0A0B0"
+                android:textSize="13sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/btnOpenLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Đăng nhập ngay"
+                android:textColor="#00FF66"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

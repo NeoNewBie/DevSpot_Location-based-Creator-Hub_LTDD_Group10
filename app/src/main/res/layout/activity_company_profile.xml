@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/includedBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="Quay lại"
+                android:src="@android:drawable/ic_menu_revert"
+                android:tint="@color/text_main" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="HỒ SƠ DOANH NGHIỆP"
+                android:textColor="@color/neon_blue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnEditCompany"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="Chỉnh sửa công ty"
+                android:src="@android:drawable/ic_menu_edit"
+                android:tint="@color/neon_green" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Nexus AI Labs Vietnam"
+            android:textColor="@color/text_main"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCompanyIndustry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Doanh nghiệp công nghệ • Đà Nẵng"
+            android:textColor="@color/neon_green"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvCompanyBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/bg_panel"
+            android:padding="16dp"
+            android:text="Kết nối và phát triển nhân tài công nghệ trẻ. Khám phá các dự án nổi bật, cơ hội thực tập và vị trí đang tuyển quanh khu vực."
+            android:textColor="@color/text_sub"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="CƠ HỘI ĐANG TUYỂN"
+            android:textColor="@color/neon_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_panel"
+            android:padding="14dp"
+            android:text="• Android Developer Intern\n• AI Research Engineer Intern\n• Backend Developer Fresher"
+            android:textColor="@color/text_main"
+            android:lineSpacingExtra="8dp" />
+
+        <Button
+            android:id="@+id/btnCompanyMessages"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/neon_green"
+            android:text="MỞ HỘP THƯ"
+            android:textColor="#000000" />
+    </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/includedBottomNav"
+        layout="@layout/layout_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

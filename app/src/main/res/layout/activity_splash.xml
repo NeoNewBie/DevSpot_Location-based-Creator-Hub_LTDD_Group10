@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- 1. Logo Ứng dụng -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_devspot_logo" /> <!-- Nhớ chép ảnh logo vào thư mục res/drawable -->
+
+    <!-- 2. Tên Ứng dụng -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="DEVSPOT"
+        android:textColor="#00FF66"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <!-- 3. Câu Slogan -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="LOCATION-BASED CREATOR HUB"
+        android:textColor="#A0A0B0"
+        android:textSize="14sp"
+        android:letterSpacing="0.1" />
+
+    <!-- 4. Vòng xoay Loading đơn giản -->
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:indeterminateTint="#00FF66" />
+
+</LinearLayout>

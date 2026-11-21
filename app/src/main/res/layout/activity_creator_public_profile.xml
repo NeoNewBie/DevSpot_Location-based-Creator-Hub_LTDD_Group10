@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Quay lại"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="@color/text_main" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="HỒ SƠ CREATOR"
+            android:textColor="@color/neon_blue"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPublicCreatorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nguyễn Tuấn Kiệt ✔"
+            android:textColor="@color/text_main"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPublicCreatorHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Sinh viên CNTT • ĐH Sư phạm Kỹ thuật Đà Nẵng"
+            android:textColor="@color/neon_green"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvPublicCreatorBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/bg_panel"
+            android:padding="16dp"
+            android:text="Quan tâm đến AI/ML, hệ thống nhúng và các sản phẩm có tác động thực tế. Đang tìm cơ hội thực tập để phát triển cùng đội ngũ kỹ thuật."
+            android:textColor="@color/text_sub"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="KỸ NĂNG"
+            android:textColor="@color/neon_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPublicCreatorSkills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Kotlin • Python • TensorFlow • IoT • Git"
+            android:textColor="@color/text_main" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="DỰ ÁN NỔI BẬT"
+            android:textColor="@color/neon_blue"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPublicCreatorProjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnFollowPublicCreator"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/bg_panel"
+                android:text="＋ KẾT BẠN"
+                android:textColor="@color/text_main" />
+
+            <Button
+                android:id="@+id/btnMessagePublicCreator"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/neon_green"
+                android:text="NHẮN TIN"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSavePublicCreator"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/bg_panel"
+            android:text="☆ LƯU HỒ SƠ CREATOR"
+            android:textColor="@color/text_main"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnInvitePublicCreator"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/neon_blue"
+            android:text="MỜI PHỎNG VẤN"
+            android:textColor="#000000" />
+    </LinearLayout>
+</ScrollView>

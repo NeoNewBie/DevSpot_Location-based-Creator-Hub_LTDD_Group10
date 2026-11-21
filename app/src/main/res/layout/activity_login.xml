@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Nút Back (Quay lại) -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="Quay lại"
+        android:src="@android:drawable/ic_menu_revert"
+        android:tint="@color/text_main" /> <!-- Tạm dùng icon có sẵn của Android -->
+
+    <!-- Trạng thái hệ thống (Góc trái) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="● RADAR HUB ACTIVE • V3.4"
+        android:textColor="@color/neon_green"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Tiêu đề lớn -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Đăng nhập"
+        android:textColor="@color/text_main"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="Chào mừng trở lại! Radar tài năng đang sẵn sàng kết nối bạn với hệ sinh thái công nghệ."
+        android:textColor="@color/text_sub"
+        android:textSize="14sp" />
+
+    <!-- Ô nhập Email -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=">_ EMAIL HOẶC TỔ CHỨC"
+        android:textColor="@color/text_sub"
+        android:textSize="12sp" />
+
+    <!-- Dùng nền màu xám đậm cho ô nhập liệu -->
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#1A1A24"
+        android:drawableStart="@android:drawable/ic_dialog_email"
+        android:drawablePadding="12dp"
+        android:hint="name@university.edu.vn"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sub" />
+
+    <!-- Khung Mật khẩu (Có nút Quên mật khẩu cùng hàng) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=">_ MẬT KHẨU BẢO MẬT"
+            android:textColor="@color/text_sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/btnForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Quên mật khẩu?"
+            android:textColor="@color/neon_green"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Ô nhập Mật khẩu -->
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#1A1A24"
+        android:drawableStart="@android:drawable/ic_lock_idle_lock"
+        android:drawablePadding="12dp"
+        android:hint="••••••••"
+        android:inputType="textPassword"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_main"
+        android:textColorHint="@color/text_sub" />
+
+    <!-- Checkbox Duy trì đăng nhập -->
+    <CheckBox
+        android:id="@+id/cbRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:buttonTint="@color/neon_green"
+        android:text="Duy trì tín hiệu kết nối trên thiết bị này"
+        android:textColor="@color/text_main"
+        android:textSize="12sp" />
+
+    <!-- Nút ĐĂNG NHẬP -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:backgroundTint="@color/neon_green"
+        android:text="ĐĂNG NHẬP ⚡"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLoginFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/neon_green"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- Phần Đăng ký ở dưới cùng màn hình -->
+    <!-- Dùng View trống để đẩy phần chữ xuống đáy (Cách làm tối giản thay vì ConstraintLayout) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có tài khoản? "
+            android:textColor="@color/text_sub"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btnOpenRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Đăng ký ngay →"
+            android:textColor="@color/neon_green"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

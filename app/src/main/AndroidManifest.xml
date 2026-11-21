@@ -2,25 +2,55 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 1. QUYỀN MẠNG & INTERNET -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- 2. QUYỀN VỊ TRÍ (Phục vụ bản đồ Radar GPS) -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- 3. QUYỀN BỘ NHỚ ĐỆM (Bắt buộc cho OSMDroid Cache Tile Map) -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DevSpot">
+
+        <!-- Activity Khởi chạy Chính -->
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Đăng ký thêm các Activity phụ trong dự án (Nếu dùng nhiều Activity) -->
+        <!--
+        <activity android:name=".view.LoginActivity" android:exported="false" />
+        <activity android:name=".view.RoleSelectionActivity" android:exported="false" />
+        <activity android:name=".view.RegisterCreatorActivity" android:exported="false" />
+        <activity android:name=".view.RegisterRecruiterActivity" android:exported="false" />
+        <activity android:name=".view.ChatDetailActivity" android:exported="false" />
+        <activity android:name=".view.InterviewDispatchActivity" android:exported="false" />
+        <activity android:name=".view.InterviewSuccessActivity" android:exported="false" />
+        <activity android:name=".view.LogoutConfirmActivity" android:exported="false" />
+        -->
+
     </application>
 
 </manifest>

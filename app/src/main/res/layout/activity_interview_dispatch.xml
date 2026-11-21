@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F15"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 1. TOP BAR (Nút Back & Tiêu đề) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="Mời Phỏng Vấn Trực Tiếp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 2. THÔNG TIN ỨNG VIÊN ĐƯỢC CHỌN -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#1A1A24"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="#2A2A35"
+                    android:padding="8dp"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    android:tint="#00F3FF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCandidateName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyễn Tuấn Kiệt"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCandidateUniversity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Senior Dev • ĐH Sư phạm Kỹ thuật"
+                        android:textColor="#A0A0B0"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Match 96%"
+                    android:textColor="#00FF66"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Mục tiêu dự án -->
+            <TextView
+                android:id="@+id/tvTargetProject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="#2A2A35"
+                android:padding="8dp"
+                android:text="🎯 Target: Cybersafe IoT / Edge AI"
+                android:textColor="#00F3FF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- 3. CHỌN LỊCH TRÌNH / THỜI GIAN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="📅 LỊCH TRÌNH KHẢ DỤNG"
+            android:textColor="#00FF66"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <!-- Ô nhập ngày & giờ tối giản -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etInterviewDate"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="#1A1A24"
+                android:drawableStart="@android:drawable/ic_menu_today"
+                android:drawablePadding="8dp"
+                android:focusable="false"
+                android:hint="Chọn ngày"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#A0A0B0"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/etInterviewTime"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="#1A1A24"
+                android:drawableStart="@android:drawable/ic_menu_recent_history"
+                android:drawablePadding="8dp"
+                android:focusable="false"
+                android:hint="09:30 - 10:30"
+                android:paddingHorizontal="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#A0A0B0"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- 4. ĐỊA ĐIỂM & MỨC ĐÃI NGỘ ĐỀ XUẤT -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="📍 ĐỊA ĐIỂM &amp; ĐÃI NGỘ"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="#1A1A24"
+            android:drawableStart="@android:drawable/ic_menu_mylocation"
+            android:drawablePadding="8dp"
+            android:hint="Khu Công Nghệ Cao / Văn phòng Công ty"
+            android:paddingHorizontal="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/etSalaryOffer"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="#1A1A24"
+            android:drawableStart="@android:drawable/ic_menu_compass"
+            android:drawablePadding="8dp"
+            android:hint="Mức lương đề xuất (VD: 15.000.000 - 20.000.000 VNĐ)"
+            android:inputType="text"
+            android:paddingHorizontal="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555"
+            android:textSize="13sp" />
+
+        <!-- 5. GHI CHÚ LỜI MỜI (DISPATCH MESSAGE) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="💬 LỜI MỜI DÀNH CHO ỨNG VIÊN"
+            android:textColor="#A0A0B0"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etInviteNote"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="#1A1A24"
+            android:gravity="top"
+            android:hint="Chào bạn, mình rất ấn tượng với đồ án của bạn trên DevSpot Radar. Mời bạn đến trao đổi sâu hơn..."
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#555555"
+            android:textSize="13sp" />
+
+        <!-- Spacer đẩy nút bấm xuống -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- 6. NÚT XÁC NHẬN BẮN TÍN HIỆU MỜI PHỎNG VẤN -->
+        <Button
+            android:id="@+id/btnSendInterview"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#00FF66"
+            android:text="⚡ XÁC NHẬN BẮN TÍN HIỆU MỜI PV"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stateRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <ProgressBar
+        android:id="@+id/stateProgress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:indeterminateTint="@color/neon_blue"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvStateIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="◎"
+        android:textColor="@color/neon_blue"
+        android:textSize="48sp" />
+
+    <TextView
+        android:id="@+id/tvStateTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Chưa có dữ liệu"
+        android:textColor="@color/text_main"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvStateMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Hãy thử lại hoặc điều chỉnh bộ lọc của bạn."
+        android:textColor="@color/text_sub"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnStateAction"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/neon_green"
+        android:text="THỬ LẠI"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/btnStateBack"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/bg_panel"
+        android:text="QUAY LẠI"
+        android:textColor="@color/text_main" />
+</LinearLayout>

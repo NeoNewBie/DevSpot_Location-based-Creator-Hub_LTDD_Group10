@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1A1A24"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔍 BỘ LỌC RADAR TÌM TÀI NĂNG"
+        android:textColor="#00F3FF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Chọn Bán kính quét (Radius Slider) -->
+    <TextView
+        android:id="@+id/tvRadiusValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Bán kính quét: 5 km"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+
+    <SeekBar
+        android:id="@+id/sbRadius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:max="20"
+        android:progress="5"
+        android:progressTint="#00FF66"
+        android:thumbTint="#00FF66" />
+
+    <!-- Chọn Chuyên môn / Tech Stack -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Lọc theo Công nghệ (Tech Stack):"
+        android:textColor="#A0A0B0"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/etFilterTech"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        android:background="#2A2A35"
+        android:hint="Nhập công nghệ (VD: Kotlin, C#, React)..."
+        android:paddingHorizontal="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#555555"
+        android:textSize="13sp" />
+
+    <!-- Nút Áp dụng -->
+    <Button
+        android:id="@+id/btnApplyFilter"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#00FF66"
+        android:text="ÁP DỤNG LỌC RADAR"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</LinearLayout>
